@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+.dart_tool/
+.pub-cache/
+
+# Build outputs
+backend/dist/
+app/build/
+
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+**/google-services.json
+**/GoogleService-Info.plist
+**/firebase_options.dart
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+
+# macOS
+.DS_Store
+
+# Flutter
+*.g.dart
+*.freezed.dart
