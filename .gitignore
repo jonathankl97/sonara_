@@ -13,7 +13,7 @@ app/build/
 !.env.example
 **/google-services.json
 **/GoogleService-Info.plist
-**/firebase_options.dart
+
 
 # Terraform
 **/.terraform/
