@@ -28,3 +28,6 @@ app/build/
 # Flutter
 *.g.dart
 *.freezed.dart
+
+
+**/firebase-service-account.json
