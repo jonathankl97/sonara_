@@ -23,8 +23,8 @@ export class User {
   @Column({ unique: true })
   email!: string;
 
-  @Column({ nullable: true })
-  displayName!: string;
+  @Column({ nullable: true, type: 'varchar' })
+  displayName!: string | null;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.ARTIST })
   role!: UserRole;
