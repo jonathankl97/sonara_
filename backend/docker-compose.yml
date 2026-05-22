@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: sonara-postgres
+    environment:
+      POSTGRES_USER: sonara_admin
+      POSTGRES_PASSWORD: sonara_local
+      POSTGRES_DB: sonara
+    ports:
+      - "5433:5432"
+    volumes:
+      - sonara_pgdata:/var/lib/postgresql/data
+
+volumes:
+  sonara_pgdata:
