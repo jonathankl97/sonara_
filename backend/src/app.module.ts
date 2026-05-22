@@ -9,14 +9,15 @@ import { User } from './users/user.entity';
 
 @Module({
   imports: [
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      username: process.env.DB_USER || 'sonara_admin',
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME || 'sonara',
+      type: 'postgres' as const,
+      host: process.env.DB_HOST ?? 'localhost',
+      port: parseInt(process.env.DB_PORT ?? '5432', 10),
+      username: process.env.DB_USER ?? 'sonara_admin',
+      password: process.env.DB_PASSWORD ?? '',
+      database: process.env.DB_NAME ?? 'sonara',
       entities: [User],
       synchronize: process.env.NODE_ENV !== 'production',
     }),
