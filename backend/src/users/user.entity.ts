@@ -29,6 +29,21 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.ARTIST })
   role!: UserRole;
 
+  @Column({ nullable: true, type: 'varchar' })
+  address!: string | null;
+
+  @Column({ nullable: true, type: 'varchar' })
+  zip!: string | null;
+
+  @Column({ nullable: true, type: 'varchar' })
+  city!: string | null;
+
+  @Column('simple-array', { nullable: true })
+  roles!: string[] | null;
+
+  @Column('simple-array', { nullable: true })
+  genres!: string[] | null;
+
   @CreateDateColumn()
   createdAt!: Date;
 
