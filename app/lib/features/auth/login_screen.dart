@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,19 +30,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState?.validate() != true) return;
 
     setState(() => _isLoading = true);
-    await ref
-        .read(authProvider.notifier)
-        .signInWithEmail(
-          _emailController.text.trim(),
-          _passwordController.text.trim(),
+
+    try {
+      await ref
+          .read(authProvider.notifier)
+          .signInWithEmail(
+            _emailController.text.trim(),
+            _passwordController.text.trim(),
+          );
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        // Snackbar zeigen
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message ?? 'Login fehlgeschlagen'),
+            backgroundColor: const Color(0xFFFF453A),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
         );
-    setState(() => _isLoading = false);
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authProvider);
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -181,17 +198,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                     ),
-                    if (authState.error != null) ...[
-                      const SizedBox(height: 12),
-                      Text(
-                        authState.error!,
-                        style: const TextStyle(
-                          color: Color(0xFFFF453A),
-                          fontSize: 13,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _signIn,

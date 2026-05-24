@@ -32,21 +32,15 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<void> signInWithEmail(String email, String password) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      state = AuthState.error(e.message ?? 'Login fehlgeschlagen');
-    }
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
-
-  
 }
 
 final authProvider = NotifierProvider<AuthNotifier, AuthState>(
