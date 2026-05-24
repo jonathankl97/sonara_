@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sonara/core/home_screen.dart';
 import 'package:sonara/features/auth/credentials_screen.dart';
 import 'package:sonara/features/auth/genre_selection_screen.dart';
 import 'package:sonara/features/auth/role_selection_screen.dart';
@@ -57,19 +58,40 @@ final routerProvider = Provider<GoRouter>((ref) {
           return GenreSelectionScreen(role: role, credentials: credentials);
         },
       ),
-      GoRoute(
-        path: '/home',
-        builder: (context, state) => Consumer(
-          builder: (context, ref, _) => Scaffold(
-            backgroundColor: Colors.black,
-            body: Center(
-              child: ElevatedButton(
-                onPressed: () => ref.read(authProvider.notifier).signOut(),
-                child: const Text('Logout', style: TextStyle(color: Colors.white)),
-              ),
+      ShellRoute(
+        builder: (context, state, child) => HomeScreen(child: child),
+        routes: [
+          GoRoute(
+            path: '/home',
+            builder: (context, state) => const Scaffold(
+              body: Center(child: Text('Discovery — kommt gleich')),
             ),
           ),
-        ),
+          GoRoute(
+            path: '/dashboard',
+            builder: (context, state) => const Scaffold(
+              body: Center(child: Text('Dashboard — kommt gleich')),
+            ),
+          ),
+          GoRoute(
+            path: '/bookings',
+            builder: (context, state) => const Scaffold(
+              body: Center(child: Text('Bookings — kommt gleich')),
+            ),
+          ),
+          GoRoute(
+            path: '/chat',
+            builder: (context, state) => const Scaffold(
+              body: Center(child: Text('Chat — kommt gleich')),
+            ),
+          ),
+          GoRoute(
+            path: '/profile',
+            builder: (context, state) => const Scaffold(
+              body: Center(child: Text('Profil — kommt gleich')),
+            ),
+          ),
+        ],
       ),
     ],
   );

@@ -23,7 +23,13 @@ class MyApp extends ConsumerWidget {
         scaffoldBackgroundColor: Colors.black,
         colorScheme: const ColorScheme.dark(
           surface: Colors.black,
-          primary: Colors.white,
+          primary: Color(0xFFFF9142),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFF111111),
+          selectedItemColor: Color(0xFFFF9142),
+          unselectedItemColor: Color(0x66FFFFFF),
+          type: BottomNavigationBarType.fixed,
         ),
         useMaterial3: true,
       ),

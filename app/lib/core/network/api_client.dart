@@ -10,6 +10,19 @@ class ApiClient {
     ),
   );
 
+  Future<Response<dynamic>> get(String path) async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    return _dio.get(
+      path,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+  }
+
   Future<Response<dynamic>> post(
     String path, {
     required Map<String, dynamic> data,
