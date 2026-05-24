@@ -1,13 +1,30 @@
+import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sonara/core/network/api_client.dart';
 import 'sign_up_screen.dart';
 
 const _genres = [
-  'HipHop', 'Pop', 'Rock', 'Trap', 'R&B', 'Jazz',
-  'Electronic', 'Classical', 'Country', 'Reggae',
-  'Metal', 'Folk', 'Blues', 'Indie', 'Soul', 'Funk',
-  'Punk', 'Latin',
+  'HipHop',
+  'Pop',
+  'Rock',
+  'Trap',
+  'R&B',
+  'Jazz',
+  'Electronic',
+  'Classical',
+  'Country',
+  'Reggae',
+  'Metal',
+  'Folk',
+  'Blues',
+  'Indie',
+  'Soul',
+  'Funk',
+  'Punk',
+  'Latin',
 ];
 
 class GenreSelectionScreen extends ConsumerStatefulWidget {
@@ -31,8 +48,65 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
 
   Future<void> _submit() async {
     setState(() => _isLoading = true);
-    // TODO: Firebase Registration + Backend Call kommt hier
-    setState(() => _isLoading = false);
+
+    try {
+      // 1. Firebase Registrierung
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: widget.credentials['email']!,
+            password: widget.credentials['password']!,
+          );
+
+      await credential.user?.updateDisplayName(widget.credentials['name']);
+
+      // 2. Backend Call
+      await apiClient.post(
+        '/auth/register',
+        data: {
+          'name': widget.credentials['name'],
+          'email': widget.credentials['email'],
+          'password': widget.credentials['password'],
+          'address': widget.credentials['address'],
+          'zip': widget.credentials['zip'],
+          'city': widget.credentials['city'],
+          'role': widget.role,
+          'roles':
+              (widget.credentials['roles'] as String?)
+                  ?.split(',')
+                  .where((r) => r.isNotEmpty)
+                  .toList() ??
+              [],
+          'genres': _selected.toList(),
+        },
+      );
+
+      // 3. GoRouter navigiert automatisch via AuthNotifier
+    } on FirebaseAuthException catch (e) {
+      print('Firebase Error: ${e.message}');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message ?? 'Registrierung fehlgeschlagen'),
+            backgroundColor: const Color(0xFFFF453A),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.response?.data?['message'] as String? ?? 'Server Fehler',
+            ),
+            backgroundColor: const Color(0xFFFF453A),
+          ),
+        );
+      }
+      print('Dio Error: ${e.message}');
+      print('Response: ${e.response?.data}');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -77,10 +151,7 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
                     const SizedBox(height: 10),
                     const Text(
                       'Wähle alle zutreffenden Genres aus (optional)',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0x66FFFFFF),
-                      ),
+                      style: TextStyle(fontSize: 14, color: Color(0x66FFFFFF)),
                     ),
                     const SizedBox(height: 32),
                     Wrap(

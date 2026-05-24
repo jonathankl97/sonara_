@@ -59,8 +59,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) =>
-            const Scaffold(body: Center(child: Text('Home'))),
+        builder: (context, state) => Consumer(
+          builder: (context, ref, _) => Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(
+              child: ElevatedButton(
+                onPressed: () => ref.read(authProvider.notifier).signOut(),
+                child: const Text('Logout', style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ),
+        ),
       ),
     ],
   );
