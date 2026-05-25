@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { Review } from './review.entity';
 
 export enum UserRole {
   ARTIST = 'artist',
@@ -59,6 +62,18 @@ export class User {
     soundcloud?: string;
     appleMusic?: string;
   } | null;
+
+  @Column({ type: 'float', default: 0 })
+  ratingAverage!: number;
+
+  @Column({ type: 'int', default: 0 })
+  ratingCount!: number;
+
+  @OneToMany(() => Review, (review) => review.provider)
+  receivedReviews!: Review[];
+
+  @OneToMany(() => Review, (review) => review.author)
+  writtenReviews!: Review[];
 
   @CreateDateColumn()
   createdAt!: Date;

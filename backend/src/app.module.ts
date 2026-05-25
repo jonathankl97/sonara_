@@ -7,6 +7,7 @@ import { FirebaseAuthModule } from './auth/firebase-auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { Review } from './users/review.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER ?? 'sonara_admin',
       password: process.env.DB_PASSWORD ?? '',
       database: process.env.DB_NAME ?? 'sonara',
-      entities: [User],
+      entities: [User, Review],
       synchronize: process.env.NODE_ENV !== 'production',
     }),
     FirebaseAuthModule,
