@@ -38,11 +38,27 @@ export class User {
   @Column({ nullable: true, type: 'varchar' })
   city!: string | null;
 
+  @Column({ nullable: true, type: 'varchar' })
+  profileImageUrl!: string | null;
+
+  @Column({ nullable: true, type: 'varchar' })
+  bio!: string | null;
+
   @Column('simple-array', { nullable: true })
   roles!: string[] | null;
 
   @Column('simple-array', { nullable: true })
   genres!: string[] | null;
+
+  @Column({ nullable: true, type: 'jsonb' })
+  socialMedia!: {
+    instagram?: string;
+    youtube?: string;
+    spotify?: string;
+    tiktok?: string;
+    soundcloud?: string;
+    appleMusic?: string;
+  } | null;
 
   @CreateDateColumn()
   createdAt!: Date;
