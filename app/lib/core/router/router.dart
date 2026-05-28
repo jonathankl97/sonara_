@@ -6,6 +6,7 @@ import 'package:sonara/features/auth/credentials_screen.dart';
 import 'package:sonara/features/auth/genre_selection_screen.dart';
 import 'package:sonara/features/auth/role_selection_screen.dart';
 import 'package:sonara/features/auth/sign_up_screen.dart';
+import 'package:sonara/features/profile/profile_screen.dart';
 import '../../features/auth/auth_notifier.dart';
 import '../../features/auth/login_screen.dart';
 
@@ -87,9 +88,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: '/profile',
-            builder: (context, state) => const Scaffold(
-              body: Center(child: Text('Profil — kommt gleich')),
-            ),
+            builder: (context, state) => const ProfileScreen(),
           ),
         ],
       ),

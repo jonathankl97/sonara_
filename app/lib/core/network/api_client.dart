@@ -39,6 +39,23 @@ class ApiClient {
       ),
     );
   }
+
+  Future<Response<dynamic>> patch(
+    String path, {
+    required Map<String, dynamic> data,
+  }) async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    return _dio.patch(
+      path,
+      data: data,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+  }
 }
 
 final apiClient = ApiClient();
