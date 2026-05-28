@@ -4,28 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/network/api_client.dart';
+import 'package:sonara/shared/enums/genres.dart';
 import 'sign_up_screen.dart';
 
-const _genres = [
-  'HipHop',
-  'Pop',
-  'Rock',
-  'Trap',
-  'R&B',
-  'Jazz',
-  'Electronic',
-  'Classical',
-  'Country',
-  'Reggae',
-  'Metal',
-  'Folk',
-  'Blues',
-  'Indie',
-  'Soul',
-  'Funk',
-  'Punk',
-  'Latin',
-];
+
 
 class GenreSelectionScreen extends ConsumerStatefulWidget {
   final String role;
@@ -157,7 +139,7 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
                     Wrap(
                       spacing: 8,
                       runSpacing: 10,
-                      children: _genres.map((tag) {
+                      children: genres.map((tag) {
                         final isSelected = _selected.contains(tag);
                         return GestureDetector(
                           onTap: () => setState(() {
