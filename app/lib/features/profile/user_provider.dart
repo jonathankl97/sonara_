@@ -12,6 +12,11 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     return _fetchUserData();
   }
 
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    state = AsyncData(await _fetchUserData());
+  }
+
   Future<UserModel?> _fetchUserData() async {
     try {
       final response = await apiClient.get('/auth/me');
@@ -20,6 +25,26 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     } on DioException catch (e) {
       print('DioException: ${e.response?.statusCode} — ${e.response?.data}');
       return null;
+    }
+  }
+
+  Future<void> updateUser(Map<String, dynamic> updates) async {
+    try {
+      final response = await apiClient.patch('/auth/me', data: updates);
+      state = AsyncData(
+        UserModel.fromJson(response.data as Map<String, dynamic>),
+      );
+    } on DioException catch (e) {
+      print('DioException: ${e.response?.statusCode} — ${e.response?.data}');
+    }
+  }
+
+  Future<void> updateGenres(List<String> genres) async {
+    try {
+      await apiClient.patch('/users/me', data: {'genres': genres});
+      await refresh();
+    } on DioException catch (_) {
+      rethrow;
     }
   }
 }
