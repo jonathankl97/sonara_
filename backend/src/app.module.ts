@@ -21,6 +21,11 @@ import { Review } from './users/review.entity';
       database: process.env.DB_NAME ?? 'sonara',
       entities: [User, Review],
       synchronize: process.env.NODE_ENV !== 'production',
+      ssl:
+        process.env.NODE_ENV === 'staging' ||
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
     }),
     FirebaseAuthModule,
     UsersModule,
