@@ -9,9 +9,8 @@ import 'package:sonara/core/network/api_client.dart';
 class UserProvider extends AsyncNotifier<UserModel?> {
   @override
   Future<UserModel?> build() async {
-    print('UserProvider build() called');
     final firebaseUser = await FirebaseAuth.instance.authStateChanges().first;
-    print('Firebase user: ${firebaseUser?.uid}');
+
     if (firebaseUser == null) return null;
     return _fetchUserData();
   }
@@ -26,7 +25,6 @@ class UserProvider extends AsyncNotifier<UserModel?> {
       final response = await apiClient.get('/auth/me');
       return UserModel.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
-      print('DioException: ${e.response?.statusCode} — ${e.response?.data}');
       return null;
     }
   }
