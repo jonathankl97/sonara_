@@ -96,7 +96,7 @@ class ProfileScreen extends ConsumerWidget {
                     const SizedBox(height: 50),
                     ContactSection(email: user.email, location: user.city),
                     GenreSection(),
-                    SocialMediaSection(user: user),
+                    SocialMediaSection(),
                     RatingsSection(),
                     SwitchRoleBanner(),
                   ],

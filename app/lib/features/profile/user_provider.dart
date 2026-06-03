@@ -9,7 +9,9 @@ import 'package:sonara/core/network/api_client.dart';
 class UserProvider extends AsyncNotifier<UserModel?> {
   @override
   Future<UserModel?> build() async {
+    print('UserProvider build() called');
     final firebaseUser = await FirebaseAuth.instance.authStateChanges().first;
+    print('Firebase user: ${firebaseUser?.uid}');
     if (firebaseUser == null) return null;
     return _fetchUserData();
   }
