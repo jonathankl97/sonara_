@@ -45,7 +45,10 @@ resource "aws_iam_role_policy" "ecs_secrets" {
     Statement = [{
       Effect   = "Allow"
       Action   = ["secretsmanager:GetSecretValue"]
-      Resource = [aws_secretsmanager_secret.db_password.arn]
+      Resource = [
+        aws_secretsmanager_secret.db_password.arn,
+        "arn:aws:secretsmanager:eu-central-1:650825122607:secret:sonara/staging/firebase-service-account*"
+      ]
     }]
   })
 }
@@ -134,10 +137,16 @@ resource "aws_ecs_task_definition" "backend" {
       { name = "NODE_ENV", value = "staging" },
       { name = "PORT",     value = "3000" }
     ]
-    secrets = [{
-      name      = "DB_PASSWORD"
-      valueFrom = aws_secretsmanager_secret.db_password.arn
-    }]
+    secrets = [
+      {
+        name      = "DB_PASSWORD"
+        valueFrom = aws_secretsmanager_secret.db_password.arn
+      },
+      {
+        name      = "FIREBASE_SERVICE_ACCOUNT_JSON"
+        valueFrom = "arn:aws:secretsmanager:eu-central-1:650825122607:secret:sonara/staging/firebase-service-account"
+      }
+    ]
     logConfiguration = {
       logDriver = "awslogs"
       options = {
