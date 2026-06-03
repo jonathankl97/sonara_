@@ -44,9 +44,10 @@ jobs:
 
       - name: Build & Push Docker Image
         run: |
-          IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-central-1.amazonaws.com/sonara/backend:${{ github.sha }}
-          docker build -t $IMAGE_URI .
-          docker push $IMAGE_URI
+           IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-central-1.amazonaws.com/sonara/backend
+           docker build -t $IMAGE_URI:${{ github.sha }} -t $IMAGE_URI:latest .
+           docker push $IMAGE_URI:${{ github.sha }}
+           docker push $IMAGE_URI:latest
 
       - name: Deploy to ECS
         run: |
