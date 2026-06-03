@@ -45,10 +45,7 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   const Text(
                     'Vernetze dich mit den richtigen Musikprofis.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0x66FFFFFF),
-                    ),
+                    style: TextStyle(fontSize: 14, color: Color(0x66FFFFFF)),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -59,7 +56,8 @@ class SignUpScreen extends StatelessWidget {
                   _RoleCard(
                     icon: Icons.mic_rounded,
                     title: 'Ich bin ein Künstler',
-                    subtitle: 'Finde Studios, Produzenten und Engineers für dein nächstes Projekt',
+                    subtitle:
+                        'Finde Studios, Produzenten und Engineers für dein nächstes Projekt',
                     isAccent: true,
                     onTap: () => context.push('/signup/credentials/artist'),
                   ),
@@ -67,7 +65,8 @@ class SignUpScreen extends StatelessWidget {
                   _RoleCard(
                     icon: Icons.headphones_rounded,
                     title: 'Ich bin ein Dienstleister',
-                    subtitle: 'Biete dein Studio, deine Produktion oder weitere Dienstleistungen an',
+                    subtitle:
+                        'Biete dein Studio, deine Produktion oder weitere Dienstleistungen an',
                     isAccent: false,
                     onTap: () => context.push('/signup/credentials/provider'),
                   ),
@@ -76,25 +75,31 @@ class SignUpScreen extends StatelessWidget {
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Du hast bereits ein Konto? ',
-                      style: TextStyle(color: Color(0x66FFFFFF), fontSize: 14),
-                    ),
-                    GestureDetector(
-                      onTap: () => context.push('/signin'),
-                      child: const Text(
-                        'Melde dich an',
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Du hast bereits ein Konto? ',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          color: Color(0x66FFFFFF),
                           fontSize: 14,
                         ),
                       ),
-                    ),
-                  ],
+                      GestureDetector(
+                        onTap: () => context.push('/signin'),
+                        child: const Text(
+                          'Melde dich an',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
