@@ -43,8 +43,8 @@ resource "aws_iam_role_policy" "ecs_secrets" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect   = "Allow"
-      Action   = ["secretsmanager:GetSecretValue"]
+      Effect = "Allow"
+      Action = ["secretsmanager:GetSecretValue"]
       Resource = [
         aws_secretsmanager_secret.db_password.arn,
         "arn:aws:secretsmanager:eu-central-1:650825122607:secret:sonara/staging/firebase-service-account*"
@@ -135,7 +135,11 @@ resource "aws_ecs_task_definition" "backend" {
     }]
     environment = [
       { name = "NODE_ENV", value = "staging" },
-      { name = "PORT",     value = "3000" }
+      { name = "PORT", value = "3000" },
+      { name = "DB_HOST", value = "sonara-staging.czwc4cwy61uu.eu-central-1.rds.amazonaws.com" },
+      { name = "DB_PORT", value = "5432" },
+      { name = "DB_NAME", value = "sonara" },
+      { name = "DB_USER", value = "sonara_admin" }
     ]
     secrets = [
       {
