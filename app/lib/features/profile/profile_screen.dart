@@ -10,6 +10,7 @@ import 'package:sonara/features/profile/ratings_section.dart';
 import 'package:sonara/features/profile/social_media_section.dart';
 import 'package:sonara/features/profile/switch_role_banner.dart';
 import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/features/profile/widgets/edit_profile_sheet.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -70,7 +71,24 @@ class ProfileScreen extends ConsumerWidget {
             ],
           ),
           appBar: AppBar(
-            actions: [TextButton(onPressed: () {}, child: Text('Bearbeiten'))],
+            actions: [
+              TextButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: const Color(0xFF111111),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    builder: (ctx) => const EditProfileSheet(),
+                  );
+                },
+                child: const Text('Bearbeiten'),
+              ),
+            ],
           ),
           body: SingleChildScrollView(
             child: Center(
