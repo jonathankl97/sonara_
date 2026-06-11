@@ -5,8 +5,7 @@ class ApiClient {
   final Dio _dio =
       Dio(
           BaseOptions(
-            baseUrl:
-                'http://sonara-alb-1928425664.eu-central-1.elb.amazonaws.com',
+            baseUrl: 'http://localhost:3000',
             connectTimeout: const Duration(seconds: 10),
             receiveTimeout: const Duration(seconds: 10),
           ),
@@ -14,18 +13,12 @@ class ApiClient {
         ..interceptors.add(
           InterceptorsWrapper(
             onRequest: (options, handler) {
-              print('REQUEST: ${options.method} ${options.uri}');
               handler.next(options);
             },
             onResponse: (response, handler) {
-              print('RESPONSE: ${response.statusCode} ${response.realUri}');
               handler.next(response);
             },
             onError: (error, handler) {
-              print('ERROR type: ${error.type}');
-              print('ERROR message: ${error.message}');
-              print('ERROR error: ${error.error}');
-              print('ERROR response: ${error.response}');
               handler.next(error);
             },
           ),

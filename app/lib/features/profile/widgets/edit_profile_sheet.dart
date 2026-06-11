@@ -108,10 +108,11 @@ class _EditProfileSheetState extends ConsumerState<EditProfileSheet> {
                       backgroundImage: _localImagePath != null
                           ? FileImage(File(_localImagePath!))
                           : user?.profileImageUrl != null
-                              ? NetworkImage(user!.profileImageUrl!)
-                                  as ImageProvider
-                              : null,
-                      child: _localImagePath == null &&
+                          ? NetworkImage(user!.profileImageUrl!)
+                                as ImageProvider
+                          : null,
+                      child:
+                          _localImagePath == null &&
                               user?.profileImageUrl == null
                           ? Text(
                               (user?.displayName ?? user?.email ?? '?')[0]
@@ -195,6 +196,8 @@ class _EditProfileSheetState extends ConsumerState<EditProfileSheet> {
               controller: _bioController,
               style: const TextStyle(color: Colors.white, fontSize: 14),
               maxLines: 3,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => FocusScope.of(context).unfocus(),
               decoration: InputDecoration(
                 hintText: 'Erzähl etwas über dich...',
                 hintStyle: const TextStyle(

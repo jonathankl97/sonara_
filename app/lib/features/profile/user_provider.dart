@@ -24,7 +24,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     try {
       final response = await apiClient.get('/auth/me');
       return UserModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
+    } on DioException catch (_) {
       return null;
     }
   }

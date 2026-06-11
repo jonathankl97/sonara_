@@ -36,7 +36,8 @@ class GenreSection extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           (genres.isNotEmpty)
               ? Row(

@@ -7,8 +7,6 @@ import 'package:sonara/core/network/api_client.dart';
 import 'package:sonara/shared/enums/genres.dart';
 import 'sign_up_screen.dart';
 
-
-
 class GenreSelectionScreen extends ConsumerStatefulWidget {
   final String role;
   final Map<String, dynamic> credentials;
@@ -64,7 +62,6 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
 
       // 3. GoRouter navigiert automatisch via AuthNotifier
     } on FirebaseAuthException catch (e) {
-      print('Firebase Error: ${e.message}');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -84,8 +81,6 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
           ),
         );
       }
-      print('Dio Error: ${e.message}');
-      print('Response: ${e.response?.data}');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
