@@ -75,6 +75,19 @@ export class User {
   @OneToMany(() => Review, (review) => review.author)
   writtenReviews!: Review[];
 
+  @Column({ nullable: true, type: 'jsonb' })
+  musicTracks!:
+    | {
+        id: string;
+        name: string;
+        artists: string[];
+        albumImage: string;
+        spotifyUrl: string;
+        appleMusicUrl: string | null;
+        popularity: number;
+      }[]
+    | null;
+
   @CreateDateColumn()
   createdAt!: Date;
 

@@ -1,5 +1,3 @@
-// eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   IsOptional,
   IsString,
@@ -53,4 +51,16 @@ export class UpdateUserDto {
     soundcloud?: string;
     appleMusic?: string;
   };
+
+  @IsOptional()
+  @IsArray()
+  musicTracks?: {
+    id: string;
+    name: string;
+    artists: string[];
+    albumImage: string;
+    spotifyUrl: string;
+    appleMusicUrl: string | null;
+    popularity: number;
+  }[];
 }

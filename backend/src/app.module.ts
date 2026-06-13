@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { Review } from './users/review.entity';
+import { SpotifyModule } from './spotify/spotify.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { Review } from './users/review.entity';
     FirebaseAuthModule,
     UsersModule,
     AuthModule,
+    SpotifyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
