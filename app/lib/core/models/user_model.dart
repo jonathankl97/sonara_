@@ -1,3 +1,4 @@
+import 'package:sonara/core/models/music_track_model.dart';
 import 'review_model.dart';
 
 class UserModel {
@@ -24,6 +25,7 @@ class UserModel {
   final int ratingCount;
 
   final List<ReviewModel> receivedReviews;
+  final List<MusicTrackModel> musicTracks;
 
   final DateTime createdAt;
 
@@ -51,6 +53,7 @@ class UserModel {
     this.ratingCount = 0,
 
     this.receivedReviews = const [],
+    this.musicTracks = const [],
 
     required this.createdAt,
   });
@@ -98,6 +101,12 @@ class UserModel {
               .toList() ??
           [],
 
+      musicTracks:
+          (json['musicTracks'] as List<dynamic>?)
+              ?.map((t) => MusicTrackModel.fromJson(t as Map<String, dynamic>))
+              .toList() ??
+          [],
+
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }
@@ -105,23 +114,14 @@ class UserModel {
   Map<String, dynamic> toPatchJson() {
     return {
       if (displayName != null) 'displayName': displayName,
-
       if (bio != null) 'bio': bio,
-
       if (city != null) 'city': city,
-
       if (address != null) 'address': address,
-
       if (zip != null) 'zip': zip,
-
       if (profileImageUrl != null) 'profileImageUrl': profileImageUrl,
-
       'role': role,
-
       'roles': roles,
-
       'genres': genres,
-
       'socialMedia': socialMedia,
     };
   }
@@ -140,35 +140,25 @@ class UserModel {
     double? ratingAverage,
     int? ratingCount,
     List<ReviewModel>? receivedReviews,
+    List<MusicTrackModel>? musicTracks,
   }) {
     return UserModel(
       id: id,
       email: email,
-
       displayName: displayName ?? this.displayName,
-
       bio: bio ?? this.bio,
-
       city: city ?? this.city,
       address: address ?? this.address,
       zip: zip ?? this.zip,
-
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
-
       role: role ?? this.role,
-
       roles: roles ?? this.roles,
-
       genres: genres ?? this.genres,
-
       socialMedia: socialMedia ?? this.socialMedia,
-
       ratingAverage: ratingAverage ?? this.ratingAverage,
-
       ratingCount: ratingCount ?? this.ratingCount,
-
       receivedReviews: receivedReviews ?? this.receivedReviews,
-
+      musicTracks: musicTracks ?? this.musicTracks,
       createdAt: createdAt,
     );
   }
