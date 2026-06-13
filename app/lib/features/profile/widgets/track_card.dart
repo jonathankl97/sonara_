@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sonara/core/models/music_track_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 

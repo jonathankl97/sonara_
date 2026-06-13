@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:sonara/features/auth/auth_notifier.dart';
 import 'package:sonara/features/profile/contact_section.dart';
 import 'package:sonara/features/profile/genre_section.dart';
 import 'package:sonara/features/profile/profile_complete_banner.dart';
@@ -12,6 +11,7 @@ import 'package:sonara/features/profile/switch_role_banner.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/features/profile/widgets/edit_profile_sheet.dart';
 import 'package:sonara/features/profile/music_section.dart';
+import 'package:sonara/features/profile/widgets/profile_drawer.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -36,41 +36,7 @@ class ProfileScreen extends ConsumerWidget {
             ].where((v) => v).length /
             4;
         return Scaffold(
-          drawer: NavigationDrawer(
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(color: Colors.black),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: user.profileImageUrl != null
-                          ? NetworkImage(user.profileImageUrl!)
-                          : null,
-                      child: user.profileImageUrl == null
-                          ? const Icon(Icons.person, size: 30)
-                          : null,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(user.displayName ?? 'Unbekannt'),
-                  ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Einstellungen'),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Abmelden'),
-                onTap: () {
-                  ref.read(authProvider.notifier).signOut();
-                },
-              ),
-            ],
-          ),
+          drawer: ProfileDrawer(user: user),
           appBar: AppBar(
             actions: [
               TextButton(
