@@ -47,4 +47,4 @@ app.*.map.json
 #Secrets
 .env
 .env.*
-!.env.example
+!.env.exampleapp/android/build/

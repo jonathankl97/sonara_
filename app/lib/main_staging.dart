@@ -9,9 +9,9 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppConfig.configure(
-    baseUrl: 'https://api.sonara.de',
-    flavor: Flavor.prod,
-    appName: 'Sonara',
+    baseUrl: 'http://sonara-alb-1928425664.eu-central-1.elb.amazonaws.com',
+    flavor: Flavor.staging,
+    appName: 'Sonara Staging',
   );
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ProviderScope(child: MyApp()));
