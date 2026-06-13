@@ -4,13 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/models/user_model.dart';
-import 'package:sonara/core/network/api_client.dart';
+import 'package:sonara/core/repositories/user_repository.dart';
 
 class UserProvider extends AsyncNotifier<UserModel?> {
+  late UserRepository _repository;
+
   @override
   Future<UserModel?> build() async {
+    _repository = ref.read(userRepositoryProvider);
     final firebaseUser = await FirebaseAuth.instance.authStateChanges().first;
-
     if (firebaseUser == null) return null;
     return _fetchUserData();
   }
@@ -22,8 +24,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
   Future<UserModel?> _fetchUserData() async {
     try {
-      final response = await apiClient.get('/auth/me');
-      return UserModel.fromJson(response.data as Map<String, dynamic>);
+      return await _repository.fetchMe();
     } on DioException catch (_) {
       return null;
     }
@@ -31,7 +32,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
   Future<void> updateUser(Map<String, dynamic> updates) async {
     try {
-      await apiClient.patch('/users/me', data: updates);
+      await _repository.updateUser(updates);
       await refresh();
     } on DioException catch (_) {
       rethrow;
@@ -40,7 +41,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
   Future<void> updateGenres(List<String> genres) async {
     try {
-      await apiClient.patch('/users/me', data: {'genres': genres});
+      await _repository.updateUser({'genres': genres});
       await refresh();
     } on DioException catch (_) {
       rethrow;
@@ -49,7 +50,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
   Future<void> updateSocialMedia(Map<String, String> socialMedia) async {
     try {
-      await apiClient.patch('/users/me', data: {'socialMedia': socialMedia});
+      await _repository.updateUser({'socialMedia': socialMedia});
       await refresh();
     } on DioException catch (_) {
       rethrow;
@@ -70,7 +71,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
       final url = await ref.getDownloadURL();
 
       try {
-        await apiClient.patch('/users/me', data: {'profileImageUrl': url});
+        await _repository.updateUser({'profileImageUrl': url});
         await refresh();
       } catch (e) {
         await ref.delete();
@@ -83,10 +84,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
   Future<void> addMusicTrack(String spotifyUrl, String? appleMusicUrl) async {
     try {
-      await apiClient.post(
-        '/spotify/tracks',
-        data: {'spotifyUrl': spotifyUrl, 'appleMusicUrl': appleMusicUrl},
-      );
+      await _repository.addMusicTrack(spotifyUrl, appleMusicUrl);
       await refresh();
     } on DioException catch (_) {
       rethrow;
@@ -100,25 +98,19 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
       final updatedTracks = current.musicTracks
           .where((t) => t.id != trackId)
+          .map(
+            (t) => {
+              'id': t.id,
+              'name': t.name,
+              'artists': t.artists,
+              'albumImage': t.albumImage,
+              'spotifyUrl': t.spotifyUrl,
+              'appleMusicUrl': t.appleMusicUrl,
+            },
+          )
           .toList();
 
-      await apiClient.patch(
-        '/users/me',
-        data: {
-          'musicTracks': updatedTracks
-              .map(
-                (t) => {
-                  'id': t.id,
-                  'name': t.name,
-                  'artists': t.artists,
-                  'albumImage': t.albumImage,
-                  'spotifyUrl': t.spotifyUrl,
-                  'appleMusicUrl': t.appleMusicUrl,
-                },
-              )
-              .toList(),
-        },
-      );
+      await _repository.removeMusicTrack(updatedTracks);
       await refresh();
     } on DioException catch (_) {
       rethrow;
