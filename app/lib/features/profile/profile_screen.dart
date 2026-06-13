@@ -11,6 +11,7 @@ import 'package:sonara/features/profile/social_media_section.dart';
 import 'package:sonara/features/profile/switch_role_banner.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/features/profile/widgets/edit_profile_sheet.dart';
+import 'package:sonara/features/profile/music_section.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -115,6 +116,7 @@ class ProfileScreen extends ConsumerWidget {
                     ContactSection(email: user.email, location: user.city),
                     GenreSection(),
                     SocialMediaSection(),
+                    MusicSection(),
                     RatingsSection(),
                     SwitchRoleBanner(),
                   ],

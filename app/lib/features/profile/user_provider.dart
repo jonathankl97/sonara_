@@ -80,6 +80,50 @@ class UserProvider extends AsyncNotifier<UserModel?> {
       rethrow;
     }
   }
+
+  Future<void> addMusicTrack(String spotifyUrl, String? appleMusicUrl) async {
+    try {
+      await apiClient.post(
+        '/spotify/tracks',
+        data: {'spotifyUrl': spotifyUrl, 'appleMusicUrl': appleMusicUrl},
+      );
+      await refresh();
+    } on DioException catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> removeMusicTrack(String trackId) async {
+    try {
+      final current = state.value;
+      if (current == null) return;
+
+      final updatedTracks = current.musicTracks
+          .where((t) => t.id != trackId)
+          .toList();
+
+      await apiClient.patch(
+        '/users/me',
+        data: {
+          'musicTracks': updatedTracks
+              .map(
+                (t) => {
+                  'id': t.id,
+                  'name': t.name,
+                  'artists': t.artists,
+                  'albumImage': t.albumImage,
+                  'spotifyUrl': t.spotifyUrl,
+                  'appleMusicUrl': t.appleMusicUrl,
+                },
+              )
+              .toList(),
+        },
+      );
+      await refresh();
+    } on DioException catch (_) {
+      rethrow;
+    }
+  }
 }
 
 final userProvider = AsyncNotifierProvider<UserProvider, UserModel?>(

@@ -6,17 +6,46 @@ import 'package:url_launcher/url_launcher.dart';
 import 'shared/section_title.dart';
 import 'shared/empty_state.dart';
 
-
 class SocialMediaSection extends ConsumerWidget {
   const SocialMediaSection({super.key});
 
   static const _platforms = [
-    _Platform('instagram', 'Instagram', Icons.camera_alt_outlined, 'https://instagram.com/'),
-    _Platform('youtube', 'YouTube', Icons.play_circle_outline_rounded, 'https://youtube.com/@'),
-    _Platform('spotify', 'Spotify', Icons.music_note_rounded, 'https://open.spotify.com/artist/'),
-    _Platform('tiktok', 'TikTok', Icons.music_video_outlined, 'https://tiktok.com/@'),
-    _Platform('soundcloud', 'SoundCloud', Icons.cloud_outlined, 'https://soundcloud.com/'),
-    _Platform('appleMusic', 'Apple Music', Icons.phone_iphone_outlined, 'https://music.apple.com/'),
+    _Platform(
+      'instagram',
+      'Instagram',
+      Icons.camera_alt_outlined,
+      'https://instagram.com/',
+    ),
+    _Platform(
+      'youtube',
+      'YouTube',
+      Icons.play_circle_outline_rounded,
+      'https://youtube.com/@',
+    ),
+    _Platform(
+      'spotify',
+      'Spotify',
+      Icons.music_note_rounded,
+      'https://open.spotify.com/artist/',
+    ),
+    _Platform(
+      'tiktok',
+      'TikTok',
+      Icons.music_video_outlined,
+      'https://tiktok.com/@',
+    ),
+    _Platform(
+      'soundcloud',
+      'SoundCloud',
+      Icons.cloud_outlined,
+      'https://soundcloud.com/',
+    ),
+    _Platform(
+      'appleMusic',
+      'Apple Music',
+      Icons.phone_iphone_outlined,
+      'https://music.apple.com/',
+    ),
   ];
 
   void _editSocialMedia(
@@ -66,17 +95,18 @@ class SocialMediaSection extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SectionTitle('Social Media'),
-            GestureDetector(
-              onTap: () => _editSocialMedia(context, ref, socialMedia),
-              child: const Text(
-                'Bearbeiten',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: kAccent,
-                  fontWeight: FontWeight.w600,
+            if (socialMedia.isNotEmpty)
+              GestureDetector(
+                onTap: () => _editSocialMedia(context, ref, socialMedia),
+                child: const Text(
+                  'Bearbeiten',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: kAccent,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
         const SizedBox(height: 12),
@@ -263,7 +293,10 @@ class _SocialMediaBottomSheetState extends State<_SocialMediaBottomSheet> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: kAccent, width: 1.5),
+                          borderSide: const BorderSide(
+                            color: kAccent,
+                            width: 1.5,
+                          ),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 14,
@@ -290,7 +323,10 @@ class _SocialMediaBottomSheetState extends State<_SocialMediaBottomSheet> {
                   ? const CircularProgressIndicator(color: Colors.black)
                   : const Text(
                       'Speichern',
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
                     ),
             ),
           ],
