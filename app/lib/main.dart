@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
 import 'core/router/router.dart';
+import 'core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,21 +19,7 @@ class MyApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     return MaterialApp.router(
       title: 'Sonara',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
-        colorScheme: const ColorScheme.dark(
-          surface: Colors.black,
-          primary: Color(0xFFFF9142),
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFF111111),
-          selectedItemColor: Color(0xFFFF9142),
-          unselectedItemColor: Color(0x66FFFFFF),
-          type: BottomNavigationBarType.fixed,
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.dark,
       routerConfig: router,
     );
   }

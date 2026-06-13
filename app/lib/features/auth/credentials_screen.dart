@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import './sign_up_screen.dart';
+import 'package:sonara/core/theme/app_theme.dart';
+
 
 class CredentialsScreen extends StatefulWidget {
   final String role;
