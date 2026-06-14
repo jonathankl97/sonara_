@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sonara/core/widgets/error_snackbar.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/features/profile/widgets/add_track_sheet.dart';
 import 'package:sonara/features/profile/widgets/track_list.dart';
@@ -71,15 +72,8 @@ class MusicSection extends ConsumerWidget {
                   .addMusicTrack(track.spotifyUrl, track.appleMusicUrl);
             }
             if (ctx.mounted) Navigator.pop(ctx);
-          } catch (_) {
-            if (ctx.mounted) {
-              ScaffoldMessenger.of(ctx).showSnackBar(
-                const SnackBar(
-                  content: Text('Fehler beim Speichern'),
-                  backgroundColor: Color(0xFFFF453A),
-                ),
-              );
-            }
+          } catch (e) {
+            if (ctx.mounted) showErrorSnackbar(ctx, e);
           }
         },
       ),

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/core/models/user_model.dart';
 import 'package:sonara/core/repositories/user_repository.dart';
 
@@ -25,8 +26,8 @@ class UserProvider extends AsyncNotifier<UserModel?> {
   Future<UserModel?> _fetchUserData() async {
     try {
       return await _repository.fetchMe();
-    } on DioException catch (_) {
-      return null;
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
     }
   }
 
@@ -34,8 +35,8 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     try {
       await _repository.updateUser(updates);
       await refresh();
-    } on DioException catch (_) {
-      rethrow;
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
     }
   }
 
@@ -43,8 +44,8 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     try {
       await _repository.updateUser({'genres': genres});
       await refresh();
-    } on DioException catch (_) {
-      rethrow;
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
     }
   }
 
@@ -52,8 +53,8 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     try {
       await _repository.updateUser({'socialMedia': socialMedia});
       await refresh();
-    } on DioException catch (_) {
-      rethrow;
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
     }
   }
 
@@ -73,12 +74,15 @@ class UserProvider extends AsyncNotifier<UserModel?> {
       try {
         await _repository.updateUser({'profileImageUrl': url});
         await refresh();
-      } catch (e) {
+      } on DioException catch (e) {
         await ref.delete();
-        rethrow;
+        throw AppException.fromDioException(e);
       }
-    } on DioException catch (_) {
-      rethrow;
+    } on FirebaseException catch (e) {
+      throw AppException(
+        type: AppErrorType.unknown,
+        message: e.message ?? 'Fehler beim Hochladen des Bildes.',
+      );
     }
   }
 
@@ -86,8 +90,8 @@ class UserProvider extends AsyncNotifier<UserModel?> {
     try {
       await _repository.addMusicTrack(spotifyUrl, appleMusicUrl);
       await refresh();
-    } on DioException catch (_) {
-      rethrow;
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
     }
   }
 
@@ -112,8 +116,8 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
       await _repository.removeMusicTrack(updatedTracks);
       await refresh();
-    } on DioException catch (_) {
-      rethrow;
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
     }
   }
 }
