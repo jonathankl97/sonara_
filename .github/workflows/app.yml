@@ -6,6 +6,9 @@ on:
     paths:
       - 'app/**'
   pull_request:
+    branches:
+      - main
+      - 'feature/**'
     paths:
       - 'app/**'
 
