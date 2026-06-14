@@ -1,28 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sonara/core/config/app_config.dart';
 
 class ApiClient {
-  final Dio _dio =
-      Dio(
-          BaseOptions(
-            baseUrl: 'http://localhost:3000',
-            connectTimeout: const Duration(seconds: 10),
-            receiveTimeout: const Duration(seconds: 10),
-          ),
-        )
-        ..interceptors.add(
-          InterceptorsWrapper(
-            onRequest: (options, handler) {
-              handler.next(options);
-            },
-            onResponse: (response, handler) {
-              handler.next(response);
-            },
-            onError: (error, handler) {
-              handler.next(error);
-            },
-          ),
-        );
+  late final Dio _dio;
+
+  ApiClient() {
+    _dio =
+        Dio(
+            BaseOptions(
+              baseUrl: AppConfig.baseUrl,
+              connectTimeout: const Duration(seconds: 10),
+              receiveTimeout: const Duration(seconds: 10),
+            ),
+          )
+          ..interceptors.add(
+            InterceptorsWrapper(
+              onRequest: (options, handler) => handler.next(options),
+              onResponse: (response, handler) => handler.next(response),
+              onError: (error, handler) => handler.next(error),
+            ),
+          );
+  }
 
   Future<Response<dynamic>> get(String path) async {
     final token = await FirebaseAuth.instance.currentUser?.getIdToken();
