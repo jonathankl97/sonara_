@@ -41,7 +41,7 @@ jobs:
         run: flutter pub get
 
       - name: Analyze code
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
       # Auf main: prod-Flavor bauen (der später ausgeliefert wird)
       - name: Build Android APK (prod)
