@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/features/auth/sign_up_screen.dart';
 import 'package:sonara/features/profile/shared/empty_state.dart';
 import 'package:sonara/features/profile/shared/section_title.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/shared/enums/genres.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 
 class GenreSection extends ConsumerWidget {
   const GenreSection({super.key});

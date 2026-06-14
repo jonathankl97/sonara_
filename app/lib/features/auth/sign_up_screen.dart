@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 
-const kAccent = Color(0xFFFF9142);
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/features/auth/sign_up_screen.dart';
+import 'package:sonara/core/widgets/error_snackbar.dart';
 import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 
 class EditProfileSheet extends ConsumerStatefulWidget {
   const EditProfileSheet({super.key});
@@ -58,15 +59,8 @@ class _EditProfileSheetState extends ConsumerState<EditProfileSheet> {
       });
 
       if (mounted) Navigator.pop(context);
-    } catch (_) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Fehler beim Speichern'),
-            backgroundColor: Color(0xFFFF453A),
-          ),
-        );
-      }
+    } catch (e) {
+      if (mounted) showErrorSnackbar(context, e);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

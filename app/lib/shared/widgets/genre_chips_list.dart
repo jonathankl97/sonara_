@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/features/auth/sign_up_screen.dart';
 import 'package:sonara/shared/enums/genres.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 
 class GenreChipsList extends StatefulWidget {
   final void Function(String) onToggle;

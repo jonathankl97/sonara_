@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'sign_up_screen.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 
 const _roles = [
   'Produzent',

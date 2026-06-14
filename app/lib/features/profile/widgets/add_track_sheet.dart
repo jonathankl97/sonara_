@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/models/pending_track.dart';
-import 'package:sonara/features/auth/sign_up_screen.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/features/profile/widgets/track_list.dart';
+
 
 class AddTrackSheet extends ConsumerStatefulWidget {
   final Future<void> Function(List<PendingTrack> newTracks) onSave;

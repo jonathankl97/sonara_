@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/features/auth/sign_up_screen.dart';
+import 'package:sonara/core/widgets/error_snackbar.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'shared/section_title.dart';
 import 'shared/empty_state.dart';
+import 'package:sonara/core/theme/app_theme.dart';
 
 class SocialMediaSection extends ConsumerWidget {
   const SocialMediaSection({super.key});
@@ -67,15 +68,8 @@ class SocialMediaSection extends ConsumerWidget {
           try {
             await ref.read(userProvider.notifier).updateSocialMedia(updated);
             if (ctx.mounted) Navigator.pop(ctx);
-          } on Exception catch (_) {
-            if (ctx.mounted) {
-              ScaffoldMessenger.of(ctx).showSnackBar(
-                const SnackBar(
-                  content: Text('Fehler beim Speichern'),
-                  backgroundColor: Color(0xFFFF453A),
-                ),
-              );
-            }
+          } catch (e) {
+            if (ctx.mounted) showErrorSnackbar(ctx, e);
           }
         },
       ),
