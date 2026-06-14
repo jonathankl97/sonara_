@@ -42,6 +42,9 @@ jobs:
 
       - name: Analyze code
         run: flutter analyze --no-fatal-infos
+      
+      - name: Run tests
+        run: flutter test --coverage
 
       # Auf main: prod-Flavor bauen (der später ausgeliefert wird)
       - name: Build Android APK (prod)
