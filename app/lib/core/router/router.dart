@@ -7,24 +7,49 @@ import 'package:sonara/features/auth/genre_selection_screen.dart';
 import 'package:sonara/features/auth/role_selection_screen.dart';
 import 'package:sonara/features/auth/sign_up_screen.dart';
 import 'package:sonara/features/profile/profile_screen.dart';
+import 'package:sonara/features/profile/user_provider.dart';
 import '../../features/auth/auth_notifier.dart';
 import '../../features/auth/login_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
+  final userAsync = ref.watch(userProvider);
 
   return GoRouter(
     initialLocation: '/signup',
     redirect: (context, state) {
-      final isAuthenticated = authState.status == AuthStatus.authenticated;
       final isUnknown = authState.status == AuthStatus.unknown;
+      final isAuthenticated = authState.status == AuthStatus.authenticated;
+      final loc = state.matchedLocation;
       final isOnboardingRoute =
-          state.matchedLocation.startsWith('/signup') ||
-          state.matchedLocation == '/signin';
+          loc.startsWith('/signup') || loc == '/signin';
 
+      // Firebase-Auth-Status noch nicht geladen -> abwarten
       if (isUnknown) return null;
-      if (!isAuthenticated && !isOnboardingRoute) return '/signup';
-      if (isAuthenticated && isOnboardingRoute) return '/home';
+
+      // Nicht eingeloggt -> raus aus geschützten Routes
+      if (!isAuthenticated) {
+        return isOnboardingRoute ? null : '/signup';
+      }
+
+      // Eingeloggt, aber App-Profil lädt noch -> nicht voreilig wegrouten
+      if (userAsync.isLoading) return null;
+
+      final role = userAsync.value?.role;
+
+      // Profil-Fehler oder (noch) kein Profil -> stehenlassen,
+      // HomeScreen zeigt seinen eigenen Error-/Loading-State
+      if (role == null) return null;
+
+      final home = role == 'provider' ? '/dashboard' : '/home';
+
+      // Onboarding abgeschlossen -> rollenbasierte Startseite
+      if (isOnboardingRoute) return home;
+
+      // Rollen-Guard: falsche Startseite korrigieren
+      if (role == 'artist' && loc == '/dashboard') return '/home';
+      if (role == 'provider' && loc == '/home') return '/dashboard';
+
       return null;
     },
     routes: [
