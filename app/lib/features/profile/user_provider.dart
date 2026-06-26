@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/core/models/user_model.dart';
 import 'package:sonara/core/repositories/user_repository.dart';
+import '../auth/auth_notifier.dart';
 
 class UserProvider extends AsyncNotifier<UserModel?> {
   late UserRepository _repository;
@@ -13,9 +15,22 @@ class UserProvider extends AsyncNotifier<UserModel?> {
   @override
   Future<UserModel?> build() async {
     _repository = ref.read(userRepositoryProvider);
-    final firebaseUser = await FirebaseAuth.instance.authStateChanges().first;
-    if (firebaseUser == null) return null;
-    return _fetchUserData();
+
+    // An den AuthState koppeln statt direkt an Firebase:
+    // build() läuft bei jedem Statuswechsel neu.
+    final authState = ref.watch(authProvider);
+
+    switch (authState.status) {
+      case AuthStatus.unknown:
+        // Nie abschließen -> Provider bleibt in AsyncLoading,
+        // bis authState auf authenticated/unauthenticated wechselt
+        // und build() erneut läuft.
+        return Completer<UserModel?>().future;
+      case AuthStatus.unauthenticated:
+        return null;
+      case AuthStatus.authenticated:
+        return _fetchUserData();
+    }
   }
 
   Future<void> refresh() async {
