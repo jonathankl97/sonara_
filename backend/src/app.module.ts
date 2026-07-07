@@ -9,6 +9,7 @@ import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { Review } from './users/review.entity';
 import { SpotifyModule } from './spotify/spotify.module';
+import { Service } from './services/service.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { SpotifyModule } from './spotify/spotify.module';
       username: process.env.DB_USER ?? 'sonara_admin',
       password: process.env.DB_PASSWORD ?? '',
       database: process.env.DB_NAME ?? 'sonara',
-      entities: [User, Review],
+      entities: [User, Review, Service],
       synchronize: process.env.NODE_ENV !== 'production',
       ssl:
         process.env.NODE_ENV === 'staging' ||
