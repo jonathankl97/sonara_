@@ -7,7 +7,9 @@ import 'package:sonara/features/auth/credentials_screen.dart';
 import 'package:sonara/features/auth/genre_selection_screen.dart';
 import 'package:sonara/features/auth/role_selection_screen.dart';
 import 'package:sonara/features/auth/sign_up_screen.dart';
+import 'package:sonara/features/profile/dashboard_screen.dart';
 import 'package:sonara/features/profile/profile_screen.dart';
+import 'package:sonara/features/profile/services/create_service_screen.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import '../../features/auth/auth_notifier.dart';
 import '../../features/auth/login_screen.dart';
@@ -18,29 +20,26 @@ String? resolveRedirect({
   required AsyncValue<UserModel?> userAsync,
   required String location,
 }) {
+  debugPrint(
+    'resolveRedirect: authStatus=$authStatus, userAsync=$userAsync, location=$location',
+  );
   final isUnknown = authStatus == AuthStatus.unknown;
   final isAuthenticated = authStatus == AuthStatus.authenticated;
   final isOnboardingRoute =
       location.startsWith('/signup') || location == '/signin';
 
-  // Firebase-Auth-Status noch nicht geladen -> abwarten
   if (isUnknown) return null;
 
-  // Nicht eingeloggt -> raus aus geschützten Routes
   if (!isAuthenticated) {
     return isOnboardingRoute ? null : '/signup';
   }
 
-  // Eingeloggt, aber App-Profil lädt noch -> nicht voreilig wegrouten
   if (userAsync.isLoading) return null;
 
   final role = userAsync.value?.role;
 
-  // Profil-Fehler oder (noch) kein Profil -> stehenlassen
   if (role == null) return null;
 
-  // Rollenbasierte Startseite. admin & unbekannte Rollen: bewusst
-  // kein Routing -> stehenlassen, statt blind auf Artist-Seite zu raten.
   final String home;
   switch (role) {
     case 'provider':
@@ -51,25 +50,35 @@ String? resolveRedirect({
       return null;
   }
 
-  // Onboarding abgeschlossen -> rollenbasierte Startseite
   if (isOnboardingRoute) return home;
 
-  // Rollen-Guard: falsche Startseite korrigieren
   if (role == 'artist' && location == '/dashboard') return '/home';
   if (role == 'provider' && location == '/home') return '/dashboard';
 
   return null;
 }
 
+// ← FIX: Bridge zwischen Riverpod und GoRouter. Ruft notifyListeners()
+// bei Auth-/User-Aenderungen, sodass GoRouter seinen Redirect neu
+// auswertet OHNE sich selbst (und initialLocation) neu zu erstellen.
+class _RouterNotifier extends ChangeNotifier {
+  _RouterNotifier(Ref ref) {
+    ref.listen(authProvider, (_, __) => notifyListeners());
+    ref.listen(userProvider, (_, __) => notifyListeners());
+  }
+}
+
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authProvider);
-  final userAsync = ref.watch(userProvider);
+  final notifier = _RouterNotifier(ref); // ← FIX: statt ref.watch
 
   return GoRouter(
     initialLocation: '/signup',
+    refreshListenable: notifier, // ← FIX: GoRouter reagiert hierueber
     redirect: (context, state) => resolveRedirect(
-      authStatus: authState.status,
-      userAsync: userAsync,
+      authStatus: ref
+          .read(authProvider)
+          .status, // ← FIX: ref.read statt ref.watch
+      userAsync: ref.read(userProvider), // ← FIX: ref.read statt ref.watch
       location: state.matchedLocation,
     ),
     routes: [
@@ -92,7 +101,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/signup/roles/:role',
         builder: (context, state) {
           final role = state.pathParameters['role'] ?? 'artist';
-          final credentials = (state.extra as Map<String, String>?) ?? {};
+          final credentials =
+              (state.extra as Map<String, dynamic>?) ??
+              {}; // ← FIX: war Map<String, String>
           return RolesSelectionScreen(role: role, credentials: credentials);
         },
       ),
@@ -115,9 +126,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: '/dashboard',
-            builder: (context, state) => const Scaffold(
-              body: Center(child: Text('Dashboard — kommt gleich')),
-            ),
+            builder: (context, state) => const DashboardScreen(),
           ),
           GoRoute(
             path: '/bookings',
@@ -134,6 +143,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/profile',
             builder: (context, state) => const ProfileScreen(),
+          ),
+          GoRoute(
+            path: '/services/create',
+            builder: (context, state) {
+              return const CreateServiceScreen();
+            },
           ),
         ],
       ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,82 +15,60 @@ class UserProvider extends AsyncNotifier<UserModel?> {
   Future<UserModel?> build() async {
     _repository = ref.read(userRepositoryProvider);
 
-    // An den AuthState koppeln statt direkt an Firebase:
-    // build() läuft bei jedem Statuswechsel neu.
     final authState = ref.watch(authProvider);
 
     switch (authState.status) {
       case AuthStatus.unknown:
-        // Nie abschließen -> Provider bleibt in AsyncLoading,
-        // bis authState auf authenticated/unauthenticated wechselt
-        // und build() erneut läuft.
         return Completer<UserModel?>().future;
       case AuthStatus.unauthenticated:
         return null;
       case AuthStatus.authenticated:
-        return _fetchUserData();
+        // Repository wirft AppException; AsyncNotifier faengt sie
+        // automatisch und setzt AsyncError.
+        return _repository.fetchMe();
     }
   }
 
   Future<void> refresh() async {
     state = const AsyncLoading();
-    state = AsyncData(await _fetchUserData());
-  }
-
-  Future<UserModel?> _fetchUserData() async {
-    try {
-      return await _repository.fetchMe();
-    } on DioException catch (e) {
-      throw AppException.fromDioException(e);
-    }
+    state = await AsyncValue.guard(() => _repository.fetchMe());
   }
 
   Future<void> updateUser(Map<String, dynamic> updates) async {
-    try {
-      await _repository.updateUser(updates);
-      await refresh();
-    } on DioException catch (e) {
-      throw AppException.fromDioException(e);
-    }
+    await _repository.updateUser(updates);
+    await refresh();
   }
 
   Future<void> updateGenres(List<String> genres) async {
-    try {
-      await _repository.updateUser({'genres': genres});
-      await refresh();
-    } on DioException catch (e) {
-      throw AppException.fromDioException(e);
-    }
+    await _repository.updateUser({'genres': genres});
+    await refresh();
   }
 
   Future<void> updateSocialMedia(Map<String, String> socialMedia) async {
-    try {
-      await _repository.updateUser({'socialMedia': socialMedia});
-      await refresh();
-    } on DioException catch (e) {
-      throw AppException.fromDioException(e);
-    }
+    await _repository.updateUser({'socialMedia': socialMedia});
+    await refresh();
   }
 
   Future<void> uploadProfileImage(String filePath) async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if (firebaseUser == null) return;
+
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('profile_images')
+        .child('${firebaseUser.uid}.jpg');
+
     try {
-      final firebaseUser = FirebaseAuth.instance.currentUser;
-      if (firebaseUser == null) return;
-
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('profile_images')
-          .child('${firebaseUser.uid}.jpg');
-
       await ref.putFile(File(filePath));
       final url = await ref.getDownloadURL();
 
       try {
         await _repository.updateUser({'profileImageUrl': url});
         await refresh();
-      } on DioException catch (e) {
+      } on AppException {
+        // Backend-Update fehlgeschlagen -> hochgeladenes Bild wieder loeschen.
         await ref.delete();
-        throw AppException.fromDioException(e);
+        rethrow;
       }
     } on FirebaseException catch (e) {
       throw AppException(
@@ -102,38 +79,30 @@ class UserProvider extends AsyncNotifier<UserModel?> {
   }
 
   Future<void> addMusicTrack(String spotifyUrl, String? appleMusicUrl) async {
-    try {
-      await _repository.addMusicTrack(spotifyUrl, appleMusicUrl);
-      await refresh();
-    } on DioException catch (e) {
-      throw AppException.fromDioException(e);
-    }
+    await _repository.addMusicTrack(spotifyUrl, appleMusicUrl);
+    await refresh();
   }
 
   Future<void> removeMusicTrack(String trackId) async {
-    try {
-      final current = state.value;
-      if (current == null) return;
+    final current = state.value;
+    if (current == null) return;
 
-      final updatedTracks = current.musicTracks
-          .where((t) => t.id != trackId)
-          .map(
-            (t) => {
-              'id': t.id,
-              'name': t.name,
-              'artists': t.artists,
-              'albumImage': t.albumImage,
-              'spotifyUrl': t.spotifyUrl,
-              'appleMusicUrl': t.appleMusicUrl,
-            },
-          )
-          .toList();
+    final updatedTracks = current.musicTracks
+        .where((t) => t.id != trackId)
+        .map(
+          (t) => {
+            'id': t.id,
+            'name': t.name,
+            'artists': t.artists,
+            'albumImage': t.albumImage,
+            'spotifyUrl': t.spotifyUrl,
+            'appleMusicUrl': t.appleMusicUrl,
+          },
+        )
+        .toList();
 
-      await _repository.removeMusicTrack(updatedTracks);
-      await refresh();
-    } on DioException catch (e) {
-      throw AppException.fromDioException(e);
-    }
+    await _repository.removeMusicTrack(updatedTracks);
+    await refresh();
   }
 }
 

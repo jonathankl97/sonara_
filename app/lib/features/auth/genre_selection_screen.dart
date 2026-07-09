@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/network/api_client.dart';
 import 'package:sonara/core/theme/app_theme.dart';
+import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/shared/enums/genres.dart';
-
 
 class GenreSelectionScreen extends ConsumerStatefulWidget {
   final String role;
@@ -27,6 +27,14 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
   final Set<String> _selected = {};
   bool _isLoading = false;
 
+  String? _extractErrorMessage(dynamic data) {
+    if (data is! Map) return null;
+    final message = data['message'];
+    if (message is String) return message;
+    if (message is List) return message.join(', ');
+    return null;
+  }
+
   Future<void> _submit() async {
     setState(() => _isLoading = true);
 
@@ -40,28 +48,35 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
 
       await credential.user?.updateDisplayName(widget.credentials['name']);
 
-      // 2. Backend Call
+      // 2. Roles robust auslesen — kann String oder List sein
+      final dynamic rawRoles = widget.credentials['roles'];
+      final List<String> rolesList;
+      if (rawRoles is List) {
+        rolesList = rawRoles.map((r) => r.toString()).toList();
+      } else if (rawRoles is String && rawRoles.isNotEmpty) {
+        rolesList = rawRoles.split(',').where((r) => r.isNotEmpty).toList();
+      } else {
+        rolesList = [];
+      }
+
+      // 3. Backend Call — User im Backend anlegen
       await apiClient.post(
         '/auth/register',
         data: {
           'name': widget.credentials['name'],
           'email': widget.credentials['email'],
-          'password': widget.credentials['password'],
           'address': widget.credentials['address'],
           'zip': widget.credentials['zip'],
           'city': widget.credentials['city'],
           'role': widget.role,
-          'roles':
-              (widget.credentials['roles'] as String?)
-                  ?.split(',')
-                  .where((r) => r.isNotEmpty)
-                  .toList() ??
-              [],
+          'roles': rolesList,
           'genres': _selected.toList(),
         },
       );
 
-      // 3. GoRouter navigiert automatisch via AuthNotifier
+      // 4. User existiert jetzt im Backend → userProvider neu laden,
+      // damit der Redirect die Rolle sieht und weiterleitet.
+      ref.invalidate(userProvider);
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -72,11 +87,17 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
         );
       }
     } on DioException catch (e) {
+      // Backend-Call fehlgeschlagen → Firebase-User existiert aber
+      // Backend kennt ihn nicht. Den Firebase-User wieder loeschen,
+      // sonst ist er verwaist.
+      print('Register error: ${e.response?.statusCode} ${e.response?.data}');
+      await FirebaseAuth.instance.currentUser?.delete();
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              e.response?.data?['message'] as String? ?? 'Server Fehler',
+              _extractErrorMessage(e.response?.data) ?? 'Server Fehler',
             ),
             backgroundColor: const Color(0xFFFF453A),
           ),
