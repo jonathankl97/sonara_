@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/core/network/api_client.dart';
 
 class SpotifyRepository {
@@ -6,13 +8,21 @@ class SpotifyRepository {
   SpotifyRepository(this._apiClient);
 
   Future<void> addTrack(String spotifyUrl, String? appleMusicUrl) async {
-    await _apiClient.post('/spotify/tracks', data: {
-      'spotifyUrl': spotifyUrl,
-      'appleMusicUrl': appleMusicUrl,
-    });
+    try {
+      await _apiClient.post(
+        '/spotify/tracks',
+        data: {'spotifyUrl': spotifyUrl, 'appleMusicUrl': appleMusicUrl},
+      );
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
+    }
   }
 
   Future<void> removeTrack(String trackId, List<dynamic> updatedTracks) async {
-    await _apiClient.patch('/users/me', data: {'musicTracks': updatedTracks});
+    try {
+      await _apiClient.patch('/users/me', data: {'musicTracks': updatedTracks});
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
+    }
   }
 }
