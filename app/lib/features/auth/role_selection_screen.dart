@@ -17,7 +17,7 @@ const _roles = [
 
 class RolesSelectionScreen extends ConsumerStatefulWidget {
   final String role;
-  final Map<String, String> credentials;
+  final Map<String, dynamic> credentials;
 
   const RolesSelectionScreen({
     super.key,
