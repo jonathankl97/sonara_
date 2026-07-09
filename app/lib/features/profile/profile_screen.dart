@@ -57,35 +57,38 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ],
           ),
-          body: SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ProfileHeader(
-                      profileImageUrl: user.profileImageUrl,
-                      displayName: user.displayName,
-                      bio: user.bio,
-                    ),
-                    const SizedBox(height: 16),
-                    ProfileStats(
-                      createdAt: user.createdAt,
-                      ratingsCount: user.ratingCount,
-                      averageRating: user.ratingAverage,
-                    ),
-                    const SizedBox(height: 16),
-                    if (completeness < 1)
-                      ProfileCompleteBanner(completeness: completeness),
-                    const SizedBox(height: 50),
-                    ContactSection(email: user.email, location: user.city),
-                    GenreSection(),
-                    SocialMediaSection(),
-                    MusicSection(),
-                    RatingsSection(),
-                    SwitchRoleBanner(),
-                  ],
+          body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30.0),
+            child: SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ProfileHeader(
+                        profileImageUrl: user.profileImageUrl,
+                        displayName: user.displayName,
+                        bio: user.bio,
+                      ),
+                      const SizedBox(height: 16),
+                      ProfileStats(
+                        createdAt: user.createdAt,
+                        ratingsCount: user.ratingCount,
+                        averageRating: user.ratingAverage,
+                      ),
+                      const SizedBox(height: 16),
+                      if (completeness < 1)
+                        ProfileCompleteBanner(completeness: completeness),
+                      const SizedBox(height: 50),
+                      ContactSection(email: user.email, location: user.city),
+                      GenreSection(),
+                      SocialMediaSection(),
+                      MusicSection(),
+                      RatingsSection(),
+                      if (user.role == 'artist') SwitchRoleBanner(),
+                    ],
+                  ),
                 ),
               ),
             ),
