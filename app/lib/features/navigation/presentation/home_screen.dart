@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/profile/user_provider.dart';
+import '../../profile/presentation/user_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   final Widget child;

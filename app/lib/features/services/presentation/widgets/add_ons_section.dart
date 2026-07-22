@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/features/profile/shared/section_title.dart';
+import 'package:sonara/shared/widgets/section_title.dart';
 import 'form_helpers.dart';
 
 class AddOnEntry {

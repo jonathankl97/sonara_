@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
-import 'package:sonara/core/models/user_model.dart';
-import 'package:sonara/core/repositories/user_repository.dart';
-import '../auth/auth_notifier.dart';
+import 'package:sonara/shared/models/user_model.dart';
+import 'package:sonara/features/auth/data/user_repository.dart';
+import '../../auth/auth_notifier.dart';
 
 class UserProvider extends AsyncNotifier<UserModel?> {
   late UserRepository _repository;

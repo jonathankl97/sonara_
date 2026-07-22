@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
-import 'package:sonara/core/models/user_model.dart';
+import 'package:sonara/shared/models/user_model.dart';
 import 'package:sonara/core/network/api_client.dart';
 
 class UserRepository {

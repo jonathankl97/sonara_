@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/network/api_client.dart';
 import 'package:sonara/core/theme/app_theme.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:sonara/shared/enums/genres.dart';
 
 class GenreSelectionScreen extends ConsumerStatefulWidget {

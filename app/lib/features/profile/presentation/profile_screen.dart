@@ -8,7 +8,7 @@ import 'package:sonara/features/profile/widgets/profile_stats.dart';
 import 'package:sonara/features/profile/widgets/ratings_section.dart';
 import 'package:sonara/features/profile/widgets/social_media_section.dart';
 import 'package:sonara/features/profile/widgets/switch_role_banner.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:sonara/features/profile/widgets/edit_profile_sheet.dart';
 import 'package:sonara/features/profile/widgets/music_section.dart';
 import 'package:sonara/features/profile/widgets/profile_drawer.dart';

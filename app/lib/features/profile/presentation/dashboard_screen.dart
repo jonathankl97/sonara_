@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sonara/features/profile/services/service_list.dart';
-import 'package:sonara/features/profile/shared/section_title.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/features/services/presentation/service_list.dart';
+import 'package:sonara/shared/widgets/section_title.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});

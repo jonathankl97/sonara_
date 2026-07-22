@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sonara/core/home_screen.dart';
-import 'package:sonara/core/models/user_model.dart';
+import 'package:sonara/features/navigation/presentation/home_screen.dart';
+import 'package:sonara/shared/models/user_model.dart';
 import 'package:sonara/features/auth/credentials_screen.dart';
 import 'package:sonara/features/auth/genre_selection_screen.dart';
 import 'package:sonara/features/auth/role_selection_screen.dart';
 import 'package:sonara/features/auth/sign_up_screen.dart';
-import 'package:sonara/features/profile/dashboard_screen.dart';
-import 'package:sonara/features/profile/profile_screen.dart';
-import 'package:sonara/features/profile/services/create_service_screen.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/features/profile/presentation/dashboard_screen.dart';
+import 'package:sonara/features/profile/presentation/profile_screen.dart';
+import 'package:sonara/features/services/presentation/create_service_screen.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 import '../../features/auth/auth_notifier.dart';
 import '../../features/auth/login_screen.dart';
 

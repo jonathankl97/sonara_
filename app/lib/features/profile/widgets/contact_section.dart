@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/features/profile/shared/contact_row.dart';
+import 'package:sonara/features/profile/widgets/contact_row.dart';
 
 class ContactSection extends StatelessWidget {
   final String? email;

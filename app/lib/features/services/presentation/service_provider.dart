@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/core/models/service_model.dart';
-import 'package:sonara/core/repositories/service_repository.dart';
+import 'package:sonara/features/services/data/models/service_model.dart';
+import 'package:sonara/features/services/data/repositories/service_repository.dart';
 import '../../auth/auth_notifier.dart';
 
 class ServiceNotifier extends AsyncNotifier<List<ServiceModel>> {

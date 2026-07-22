@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sonara/core/network/api_client.dart';
-import 'package:sonara/core/repositories/user_repository.dart';
+import 'package:sonara/features/auth/data/user_repository.dart';
 
 class MockApiClient extends Mock implements ApiClient {}
 

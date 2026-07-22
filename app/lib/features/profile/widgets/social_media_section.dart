@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/core/widgets/error_snackbar.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/shared/widgets/error_snackbar.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../shared/section_title.dart';
-import '../shared/empty_state.dart';
+import '../../../shared/widgets/section_title.dart';
+import '../../../shared/widgets/empty_state.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 
 class SocialMediaSection extends ConsumerWidget {

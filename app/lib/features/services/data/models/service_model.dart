@@ -1,4 +1,4 @@
-import 'package:sonara/shared/enums/service_enums.dart';
+import 'package:sonara/features/services/data/enums/service_enums.dart';
 
 class ServiceAddOnModel {
   final String title;

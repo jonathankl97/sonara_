@@ -1,5 +1,5 @@
-import 'package:sonara/core/models/music_track_model.dart';
-import 'review_model.dart';
+import 'package:sonara/features/profile/data/music_track_model.dart';
+import '../../features/profile/data/review_model.dart';
 
 class UserModel {
   final String id;

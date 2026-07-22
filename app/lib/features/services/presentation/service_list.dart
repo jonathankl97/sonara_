@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/features/profile/services/service_provider.dart';
-import 'package:sonara/features/profile/shared/section_title.dart';
+import 'package:sonara/features/services/presentation/service_provider.dart';
+import 'package:sonara/shared/widgets/section_title.dart';
 
 class ServiceList extends ConsumerWidget {
   const ServiceList({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/core/models/music_track_model.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/features/profile/data/music_track_model.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:sonara/features/profile/widgets/track_card.dart';
 
 class TrackList extends ConsumerWidget {

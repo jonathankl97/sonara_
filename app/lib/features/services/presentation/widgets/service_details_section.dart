@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/features/profile/shared/section_title.dart';
-import 'package:sonara/shared/enums/service_enums.dart';
+import 'package:sonara/shared/widgets/section_title.dart';
+import 'package:sonara/features/services/data/enums/service_enums.dart';
 import 'form_helpers.dart';
 
 const _serviceTypeLabels = {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/core/models/music_track_model.dart';
+import 'package:sonara/features/profile/data/music_track_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TrackCard extends StatelessWidget {

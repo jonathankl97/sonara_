@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/core/widgets/error_snackbar.dart';
-import 'package:sonara/features/profile/user_provider.dart';
+import 'package:sonara/shared/widgets/error_snackbar.dart';
+import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 
 class EditProfileSheet extends ConsumerStatefulWidget {

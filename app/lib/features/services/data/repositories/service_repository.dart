@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
-import 'package:sonara/core/models/service_model.dart';
+import 'package:sonara/features/services/data/models/service_model.dart';
 import 'package:sonara/core/network/api_client.dart';
 
 class ServiceRepository {
