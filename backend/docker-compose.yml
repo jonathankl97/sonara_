@@ -3,11 +3,11 @@ services:
     image: postgres:16
     container_name: sonara-postgres
     environment:
-      POSTGRES_USER: sonara_admin
-      POSTGRES_PASSWORD: sonara_local
-      POSTGRES_DB: sonara
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5433:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - sonara_pgdata:/var/lib/postgresql/data
 
