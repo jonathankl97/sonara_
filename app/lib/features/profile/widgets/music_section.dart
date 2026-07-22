@@ -4,8 +4,8 @@ import 'package:sonara/core/widgets/error_snackbar.dart';
 import 'package:sonara/features/profile/user_provider.dart';
 import 'package:sonara/features/profile/widgets/add_track_sheet.dart';
 import 'package:sonara/features/profile/widgets/track_list.dart';
-import 'shared/section_title.dart';
-import 'shared/empty_state.dart';
+import '../shared/section_title.dart';
+import '../shared/empty_state.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 
 class MusicSection extends ConsumerWidget {
