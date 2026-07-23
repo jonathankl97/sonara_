@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sonara/features/profile/data/pending_track.dart';
 import 'package:sonara/core/theme/app_theme.dart';
+import 'package:sonara/features/profile/data/pending_track.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
-import 'package:sonara/features/profile/widgets/track_list.dart';
+import 'package:sonara/features/profile/track_list.dart';
 
 
 class AddTrackSheet extends ConsumerStatefulWidget {

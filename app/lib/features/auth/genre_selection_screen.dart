@@ -87,10 +87,7 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
         );
       }
     } on DioException catch (e) {
-      // Backend-Call fehlgeschlagen → Firebase-User existiert aber
-      // Backend kennt ihn nicht. Den Firebase-User wieder loeschen,
-      // sonst ist er verwaist.
-      print('Register error: ${e.response?.statusCode} ${e.response?.data}');
+     
       await FirebaseAuth.instance.currentUser?.delete();
 
       if (mounted) {
