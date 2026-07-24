@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sonara/core/models/user_model.dart';
+import 'package:sonara/shared/models/user_model.dart';
 import 'package:sonara/core/router/router.dart';
 
 import 'package:sonara/features/auth/auth_notifier.dart';

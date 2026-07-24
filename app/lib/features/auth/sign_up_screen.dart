@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 
-
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -146,7 +145,7 @@ class _RoleCard extends StatelessWidget {
               height: 44,
               decoration: BoxDecoration(
                 color: isAccent
-                    ? kAccent.withOpacity(0.15)
+                    ? kAccent.withValues(alpha: 0.15)
                     : const Color(0x0FFFFFFF),
                 borderRadius: BorderRadius.circular(12),
               ),

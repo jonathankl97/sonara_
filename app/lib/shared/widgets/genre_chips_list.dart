@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/shared/enums/genres.dart';
 import 'package:sonara/core/theme/app_theme.dart';
+import 'package:sonara/shared/enums/genres.dart';
 
 class GenreChipsList extends StatefulWidget {
-  final void Function(String) onToggle;
+  final ValueChanged<List<String>> onChanged;
 
-  const GenreChipsList({super.key, required this.onToggle});
+  const GenreChipsList({super.key, required this.onChanged});
 
   @override
   State<GenreChipsList> createState() => _GenreChipsListState();
 }
 
 class _GenreChipsListState extends State<GenreChipsList> {
-  final Set<String> _selected;
+  final Set<String> _selected = {};
 
-  _GenreChipsListState() : _selected = {};
+  void _toggle(String genre) {
+    setState(() {
+      if (_selected.contains(genre)) {
+        _selected.remove(genre);
+      } else {
+        _selected.add(genre);
+      }
+    });
+
+    widget.onChanged(_selected.toList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +33,15 @@ class _GenreChipsListState extends State<GenreChipsList> {
       runSpacing: 10,
       children: genres.map((tag) {
         final isSelected = _selected.contains(tag);
+
         return GestureDetector(
-          onTap: () => setState(() {
-            if (isSelected) {
-              _selected.remove(tag);
-            } else {
-              _selected.add(tag);
-            }
-          }),
+          onTap: () => _toggle(tag),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
               color: isSelected
-                  ? kAccent.withOpacity(0.15)
+                  ? kAccent.withValues(alpha: 0.15)
                   : const Color(0xFF1A1A1A),
               border: Border.all(
                 color: isSelected ? kAccent : const Color(0x1AFFFFFF),

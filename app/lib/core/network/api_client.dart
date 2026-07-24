@@ -69,6 +69,19 @@ class ApiClient {
       ),
     );
   }
+
+  Future<Response<dynamic>> delete(String path) async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    return _dio.delete(
+      path,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+  }
 }
 
 final apiClient = ApiClient();
