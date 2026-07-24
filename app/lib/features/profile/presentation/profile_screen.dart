@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:sonara/features/profile/widgets/contact_section.dart';
-import 'package:sonara/features/profile/widgets/genre_section.dart';
-import 'package:sonara/features/profile/widgets/profile_complete_banner.dart';
-import 'package:sonara/features/profile/widgets/profile_header.dart';
-import 'package:sonara/features/profile/widgets/profile_stats.dart';
-import 'package:sonara/features/profile/widgets/ratings_section.dart';
-import 'package:sonara/features/profile/widgets/social_media_section.dart';
-import 'package:sonara/features/profile/widgets/switch_role_banner.dart';
+import 'package:sonara/features/profile/presentation/widgets/contact_section.dart';
+import 'package:sonara/features/profile/presentation/widgets/genre_section.dart';
+import 'package:sonara/features/profile/presentation/widgets/profile_complete_banner.dart';
+import 'package:sonara/features/profile/presentation/widgets/profile_header.dart';
+import 'package:sonara/features/profile/presentation/widgets/profile_stats.dart';
+import 'package:sonara/features/profile/presentation/widgets/ratings_section.dart';
+import 'package:sonara/features/profile/presentation/widgets/social_media_section.dart';
+import 'package:sonara/features/profile/presentation/widgets/switch_role_banner.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
-import 'package:sonara/features/profile/widgets/edit_profile_sheet.dart';
-import 'package:sonara/features/profile/widgets/music_section.dart';
-import 'package:sonara/features/profile/widgets/profile_drawer.dart';
+import 'package:sonara/features/profile/presentation/widgets/edit_profile_sheet.dart';
+import 'package:sonara/features/profile/presentation/widgets/music_section.dart';
+import 'package:sonara/features/profile/presentation/widgets/profile_drawer.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});

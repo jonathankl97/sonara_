@@ -20,13 +20,23 @@ class BookingModeSection extends StatelessWidget {
       children: [
         const SectionTitle('Wie möchtest du Buchungen verwalten?'),
         const SizedBox(height: 12),
-        _buildRadioTile(
-          label: 'Buchung auf Anfrage (kein Kalender)',
-          value: BookingMode.onRequest,
-        ),
-        _buildRadioTile(
-          label: 'Feste wöchentliche Verfügbarkeit',
-          value: BookingMode.weeklyAvailability,
+        RadioGroup<BookingMode>(
+          groupValue: selected,
+          onChanged: (v) {
+            if (v != null) onChanged(v);
+          },
+          child: Column(
+            children: [
+              _buildRadioTile(
+                label: 'Buchung auf Anfrage (kein Kalender)',
+                value: BookingMode.onRequest,
+              ),
+              _buildRadioTile(
+                label: 'Feste wöchentliche Verfügbarkeit',
+                value: BookingMode.weeklyAvailability,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -39,12 +49,7 @@ class BookingModeSection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Row(
           children: [
-            Radio<BookingMode>(
-              value: value,
-              groupValue: selected,
-              activeColor: kAccent,
-              onChanged: (v) => onChanged(v!),
-            ),
+            Radio<BookingMode>(value: value, activeColor: kAccent),
             const SizedBox(width: 4),
             Text(label, style: const TextStyle(fontSize: 13)),
           ],

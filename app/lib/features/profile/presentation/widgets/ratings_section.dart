@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../shared/widgets/section_title.dart';
-import '../../../shared/widgets/empty_state.dart';
+import '../../../../shared/widgets/section_title.dart';
+import '../../../../shared/widgets/empty_state.dart';
 
 class RatingsSection extends StatelessWidget {
   const RatingsSection({super.key});

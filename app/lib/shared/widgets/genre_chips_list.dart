@@ -41,7 +41,7 @@ class _GenreChipsListState extends State<GenreChipsList> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
               color: isSelected
-                  ? kAccent.withOpacity(0.15)
+                  ? kAccent.withValues(alpha: 0.15)
                   : const Color(0xFF1A1A1A),
               border: Border.all(
                 color: isSelected ? kAccent : const Color(0x1AFFFFFF),

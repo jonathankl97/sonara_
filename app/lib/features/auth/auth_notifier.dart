@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -19,15 +20,21 @@ class AuthState {
 }
 
 class AuthNotifier extends Notifier<AuthState> {
+  StreamSubscription<User?>? _sub; // ← FIX: Subscription speichern
+
   @override
   AuthState build() {
-    FirebaseAuth.instance.authStateChanges().listen((user) {
+    _sub?.cancel(); // ← FIX: Alten Listener canceln
+    _sub = FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user != null) {
         state = AuthState.authenticated(user);
       } else {
-        state = AuthState.unauthenticated();
+        state = const AuthState.unauthenticated();
       }
     });
+
+    ref.onDispose(() => _sub?.cancel()); // ← FIX: Beim Dispose aufraeumen
+
     return const AuthState.unknown();
   }
 

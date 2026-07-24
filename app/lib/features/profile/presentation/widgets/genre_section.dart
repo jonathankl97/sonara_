@@ -74,7 +74,7 @@ class GenreSection extends ConsumerWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    border: Border.all(color: kAccent.withOpacity(0.5)),
+                    border: Border.all(color: kAccent.withValues(alpha: 0.5)),
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Text(
@@ -161,7 +161,7 @@ class _GenreBottomSheetState extends State<_GenreBottomSheet> {
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? kAccent.withOpacity(0.15)
+                        ? kAccent.withValues(alpha: 0.15)
                         : const Color(0xFF1A1A1A),
                     border: Border.all(
                       color: isSelected ? kAccent : const Color(0x1AFFFFFF),

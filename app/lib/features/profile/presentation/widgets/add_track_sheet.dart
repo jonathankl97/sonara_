@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 import 'package:sonara/features/profile/data/pending_track.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
-import 'package:sonara/features/profile/track_list.dart';
+import 'package:sonara/features/profile/presentation/widgets/track_list.dart';
 
 
 class AddTrackSheet extends ConsumerStatefulWidget {
@@ -116,7 +116,7 @@ class _AddTrackSheetState extends ConsumerState<AddTrackSheet> {
                     decoration: BoxDecoration(
                       color: const Color(0xFF1A1A1A),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: kAccent.withOpacity(0.3)),
+                      border: Border.all(color: kAccent.withValues(alpha: 0.3)),
                     ),
                     child: Row(
                       children: [
@@ -267,7 +267,7 @@ class _AddTrackSheetState extends ConsumerState<AddTrackSheet> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
-                    border: Border.all(color: kAccent.withOpacity(0.4)),
+                    border: Border.all(color: kAccent.withValues(alpha: 0.4)),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Row(

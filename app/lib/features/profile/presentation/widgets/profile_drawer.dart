@@ -18,10 +18,10 @@ class ProfileDrawer extends ConsumerWidget {
           filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.6),
+              color: Colors.black.withValues(alpha: 0.6),
               border: Border(
                 right: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   width: 0.5,
                 ),
               ),
@@ -32,10 +32,10 @@ class ProfileDrawer extends ConsumerWidget {
                   // Header
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.05),
+                      color: Colors.white.withValues(alpha: 0.05),
                       border: Border(
                         bottom: BorderSide(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                         ),
                       ),
                     ),
@@ -111,7 +111,10 @@ class ProfileDrawer extends ConsumerWidget {
                     onTap: () {},
                   ),
                   const SizedBox(height: 8),
-                  Divider(color: Colors.white.withOpacity(0.1), height: 1),
+                  Divider(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    height: 1,
+                  ),
                   const SizedBox(height: 8),
 
                   // Rolle
@@ -126,7 +129,10 @@ class ProfileDrawer extends ConsumerWidget {
                     onTap: () {},
                   ),
                   const SizedBox(height: 8),
-                  Divider(color: Colors.white.withOpacity(0.1), height: 1),
+                  Divider(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    height: 1,
+                  ),
                   const SizedBox(height: 8),
 
                   // Support
@@ -143,7 +149,10 @@ class ProfileDrawer extends ConsumerWidget {
                   ),
 
                   const Spacer(),
-                  Divider(color: Colors.white.withOpacity(0.1), height: 1),
+                  Divider(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    height: 1,
+                  ),
 
                   // Abmelden
                   _DrawerItem(
@@ -179,7 +188,7 @@ class _SectionLabel extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,
-          color: Colors.white.withOpacity(0.27),
+          color: Colors.white.withValues(alpha: 0.27),
           letterSpacing: 0.8,
         ),
       ),

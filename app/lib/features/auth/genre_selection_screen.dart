@@ -171,7 +171,7 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
                             ),
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? kAccent.withOpacity(0.15)
+                                  ? kAccent.withValues(alpha: 0.15)
                                   : const Color(0xFF1A1A1A),
                               border: Border.all(
                                 color: isSelected

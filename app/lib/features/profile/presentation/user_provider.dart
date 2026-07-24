@@ -89,16 +89,7 @@ class UserProvider extends AsyncNotifier<UserModel?> {
 
     final updatedTracks = current.musicTracks
         .where((t) => t.id != trackId)
-        .map(
-          (t) => {
-            'id': t.id,
-            'name': t.name,
-            'artists': t.artists,
-            'albumImage': t.albumImage,
-            'spotifyUrl': t.spotifyUrl,
-            'appleMusicUrl': t.appleMusicUrl,
-          },
-        )
+        .map((t) => t.toJson()) // ← FIX: statt manueller Map
         .toList();
 
     await _repository.removeMusicTrack(updatedTracks);

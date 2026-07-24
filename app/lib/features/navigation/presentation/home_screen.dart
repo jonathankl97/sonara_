@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../auth/auth_notifier.dart';
 import '../../profile/presentation/user_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -19,10 +20,74 @@ class HomeScreen extends ConsumerWidget {
           child: CircularProgressIndicator(color: Color(0xFFFF9142)),
         ),
       ),
-      error: (e, _) => const Scaffold(
+      error: (e, _) => Scaffold(
+        // ← FIX: nicht mehr const
         backgroundColor: Colors.black,
         body: Center(
-          child: Text('Fehler', style: TextStyle(color: Colors.white)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.error_outline_rounded,
+                  color: Color(0xFFFF453A),
+                  size: 48,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Etwas ist schiefgelaufen',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  e.toString(),
+                  style: const TextStyle(
+                    color: Color(0x66FFFFFF),
+                    fontSize: 13,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => ref.invalidate(userProvider),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFF9142),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Erneut versuchen',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => ref.read(authProvider.notifier).signOut(),
+                  child: const Text(
+                    'Abmelden',
+                    style: TextStyle(color: Color(0x99FFFFFF), fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
       data: (user) {
@@ -126,7 +191,9 @@ class _BottomNav extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: isActive
-                          ? const Color(0xFFFF9142).withOpacity(0.15)
+                          ? const Color(0xFFFF9142).withValues(
+                              alpha: 0.15,
+                            ) // ← FIX: withOpacity → withValues
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(99),
                     ),

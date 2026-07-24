@@ -27,4 +27,16 @@ class MusicTrackModel {
       appleMusicUrl: json['appleMusicUrl'] as String?,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    // ← NEU
+    return {
+      'id': id,
+      'name': name,
+      'artists': artists,
+      'albumImage': albumImage,
+      'spotifyUrl': spotifyUrl,
+      'appleMusicUrl': appleMusicUrl,
+    };
+  }
 }

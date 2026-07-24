@@ -20,10 +20,8 @@ String? resolveRedirect({
   required AsyncValue<UserModel?> userAsync,
   required String location,
 }) {
-  debugPrint(
-    'resolveRedirect: authStatus=$authStatus, userAsync=$userAsync, location=$location',
-  );
-  final isUnknown = authStatus == AuthStatus.unknown;
+  final isUnknown =
+      authStatus == AuthStatus.unknown; // ← FIX: debugPrint entfernt
   final isAuthenticated = authStatus == AuthStatus.authenticated;
   final isOnboardingRoute =
       location.startsWith('/signup') || location == '/signin';
@@ -58,27 +56,22 @@ String? resolveRedirect({
   return null;
 }
 
-// ← FIX: Bridge zwischen Riverpod und GoRouter. Ruft notifyListeners()
-// bei Auth-/User-Aenderungen, sodass GoRouter seinen Redirect neu
-// auswertet OHNE sich selbst (und initialLocation) neu zu erstellen.
 class _RouterNotifier extends ChangeNotifier {
   _RouterNotifier(Ref ref) {
-    ref.listen(authProvider, (_, __) => notifyListeners());
-    ref.listen(userProvider, (_, __) => notifyListeners());
+    ref.listen(authProvider, (_, _) => notifyListeners());
+    ref.listen(userProvider, (_, _) => notifyListeners());
   }
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final notifier = _RouterNotifier(ref); // ← FIX: statt ref.watch
+  final notifier = _RouterNotifier(ref);
 
   return GoRouter(
     initialLocation: '/signup',
-    refreshListenable: notifier, // ← FIX: GoRouter reagiert hierueber
+    refreshListenable: notifier,
     redirect: (context, state) => resolveRedirect(
-      authStatus: ref
-          .read(authProvider)
-          .status, // ← FIX: ref.read statt ref.watch
-      userAsync: ref.read(userProvider), // ← FIX: ref.read statt ref.watch
+      authStatus: ref.read(authProvider).status,
+      userAsync: ref.read(userProvider),
       location: state.matchedLocation,
     ),
     routes: [
@@ -101,9 +94,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/signup/roles/:role',
         builder: (context, state) {
           final role = state.pathParameters['role'] ?? 'artist';
-          final credentials =
-              (state.extra as Map<String, dynamic>?) ??
-              {}; // ← FIX: war Map<String, String>
+          final credentials = (state.extra as Map<String, dynamic>?) ?? {};
           return RolesSelectionScreen(role: role, credentials: credentials);
         },
       ),
@@ -114,6 +105,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           final credentials = (state.extra as Map<String, dynamic>?) ?? {};
           return GenreSelectionScreen(role: role, credentials: credentials);
         },
+      ),
+      // ← FIX: Ausserhalb der ShellRoute, damit kein BottomNav
+      // angezeigt wird und kein falscher Tab-Index entsteht.
+      GoRoute(
+        path: '/services/create',
+        builder: (context, state) => const CreateServiceScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => HomeScreen(child: child),
@@ -143,12 +140,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/profile',
             builder: (context, state) => const ProfileScreen(),
-          ),
-          GoRoute(
-            path: '/services/create',
-            builder: (context, state) {
-              return const CreateServiceScreen();
-            },
           ),
         ],
       ),

@@ -11,8 +11,8 @@ class ProfileCompleteBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: kAccent.withOpacity(0.08),
-        border: Border.all(color: kAccent.withOpacity(0.2)),
+        color: kAccent.withValues(alpha: 0.08),
+        border: Border.all(color: kAccent.withValues(alpha: 0.2)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

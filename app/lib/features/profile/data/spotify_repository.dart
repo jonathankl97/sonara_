@@ -18,7 +18,8 @@ class SpotifyRepository {
     }
   }
 
-  Future<void> removeTrack(String trackId, List<dynamic> updatedTracks) async {
+  Future<void> removeTrack(List<dynamic> updatedTracks) async {
+    // ← FIX: trackId entfernt
     try {
       await _apiClient.patch('/users/me', data: {'musicTracks': updatedTracks});
     } on DioException catch (e) {
