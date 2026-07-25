@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/features/navigation/presentation/home_screen.dart';
+import 'package:sonara/features/rooms/presentation/create_room_rental_screen.dart';
 import 'package:sonara/shared/models/user_model.dart';
 import 'package:sonara/features/auth/credentials_screen.dart';
 import 'package:sonara/features/auth/genre_selection_screen.dart';
@@ -111,6 +112,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/services/create',
         builder: (context, state) => const CreateServiceScreen(),
+      ),
+      GoRoute(
+        path: '/rooms/create',
+        builder: (context, state) => const CreateRoomRentalScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => HomeScreen(child: child),
