@@ -55,7 +55,7 @@ class ServiceDetailsSection extends StatelessWidget {
           onChanged: onTypeChanged,
         ),
         const SizedBox(height: 20),
-        const FormLabel('Typische Audiolänge (Minuten)'),
+        const FormLabel('Max. Audiolänge (Minuten)'),
         const SizedBox(height: 8),
         FormTextField(
           controller: audioLengthController,

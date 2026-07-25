@@ -90,6 +90,20 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
+    // Safety-Check: Wenn Revisionen angeboten werden, muss eine Anzahl da sein.
+    if (_offersRevisions) {
+      final count = int.tryParse(_revisionCountController.text.trim());
+      if (count == null || count < 1) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Bitte eine gültige Anzahl an Revisionen eingeben'),
+            backgroundColor: Color(0xFFFF453A),
+          ),
+        );
+        return;
+      }
+    }
+
     setState(() => _isLoading = true);
 
     try {
@@ -128,7 +142,15 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
 
       await ref.read(serviceNotifierProvider.notifier).createService(service);
 
-      if (mounted) context.pop();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Service erfolgreich erstellt'),
+            backgroundColor: Color(0xFF4CAF50),
+          ),
+        );
+        context.pop();
+      }
     } on AppException catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
