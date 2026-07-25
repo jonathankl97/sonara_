@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:sonara/features/profile/presentation/widgets/quick_action_button.dart';
 import 'package:sonara/features/services/presentation/service_list.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
@@ -27,7 +27,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
+                horizontal: 20,
                 vertical: 30.0,
               ),
               child: SingleChildScrollView(
@@ -44,30 +44,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const SectionTitle('Schnelle Aktionen'),
                     const SizedBox(height: 10),
                     // Add your quick action buttons here
-                    GestureDetector(
-                      onTap: () {
-                        context.push('/services/create');
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[800],
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.grey[700]!),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.add, color: Colors.white),
-                            const SizedBox(height: 12),
-                            const Text(
-                              'Neue Dienstleistung hinzufügen',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
+                    QuickActionButton(
+                      buttonText: 'Neue Dienstleistung hinzufügen',
+                      route: '/services/create',
+                      icon: Icons.add,
+                    ),
+                    const SizedBox(height: 10),
+                     QuickActionButton(
+                      buttonText: 'Vermietung einrichten',
+                      route: '/rooms/create',
+                      icon: Icons.house,
                     ),
                     const SizedBox(height: 30),
                     ServiceList(),
