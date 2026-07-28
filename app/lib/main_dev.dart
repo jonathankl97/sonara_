@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +11,9 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppConfig.configure(
-    baseUrl: 'http://localhost:3000',
+    baseUrl: Platform.isAndroid
+        ? 'http://10.0.2.2:3000'
+        : 'http://localhost:3000',
     flavor: Flavor.dev,
     appName: 'Sonara Dev',
   );
