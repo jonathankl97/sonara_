@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/features/profile/presentation/widgets/quick_action_button.dart';
+import 'package:sonara/features/rooms/presentation/rooms_list.dart';
 import 'package:sonara/features/services/presentation/service_list.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
@@ -50,13 +51,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       icon: Icons.add,
                     ),
                     const SizedBox(height: 10),
-                     QuickActionButton(
+                    QuickActionButton(
                       buttonText: 'Vermietung einrichten',
                       route: '/rooms/create',
                       icon: Icons.house,
                     ),
                     const SizedBox(height: 30),
                     ServiceList(),
+                    const SizedBox(height: 30),
+                    RoomsList(),
                   ],
                 ),
               ),
