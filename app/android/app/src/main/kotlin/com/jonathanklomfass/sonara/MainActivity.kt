@@ -1,4 +1,4 @@
-package com.sonara.sonara
+package com.jonathanklomfass.sonara
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/features/services/data/models/service_model.dart';
-import 'package:sonara/core/theme/app_theme.dart';
 import 'package:sonara/features/services/presentation/service_provider.dart';
 import 'package:sonara/features/services/data/enums/service_enums.dart';
 import 'widgets/add_ons_section.dart';
@@ -90,6 +89,20 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
+    // Safety-Check: Wenn Revisionen angeboten werden, muss eine Anzahl da sein.
+    if (_offersRevisions) {
+      final count = int.tryParse(_revisionCountController.text.trim());
+      if (count == null || count < 1) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Bitte eine gültige Anzahl an Revisionen eingeben'),
+            backgroundColor: Color(0xFFFF453A),
+          ),
+        );
+        return;
+      }
+    }
+
     setState(() => _isLoading = true);
 
     try {
@@ -128,7 +141,15 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
 
       await ref.read(serviceNotifierProvider.notifier).createService(service);
 
-      if (mounted) context.pop();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Service erfolgreich erstellt'),
+            backgroundColor: Color(0xFF4CAF50),
+          ),
+        );
+        context.pop();
+      }
     } on AppException catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -214,7 +235,7 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _submit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kAccent,
+                      backgroundColor: Color.fromRGBO(255, 106, 0, 1),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(

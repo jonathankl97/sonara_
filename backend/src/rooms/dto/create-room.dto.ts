@@ -101,7 +101,6 @@ export class CreateRoomDto {
   @Type(() => RoomEquipmentDto)
   equipment?: RoomEquipmentDto[];
 
-  @IsOptional()
   @IsArray()
   @IsUrl({}, { each: true })
   imageUrls?: string[];
