@@ -18,6 +18,14 @@ enum RoomType {
   }
 }
 
+const roomTypeLabels = {
+  RoomType.recordingStudio: 'Tonstudio',
+  RoomType.rehearsalRoom: 'Proberaum',
+  RoomType.productionSuite: 'Produktionsstudio',
+  RoomType.vocalBooth: 'Gesangskabine',
+  RoomType.podcastStudio: 'Podcast-Studio',
+};
+
 enum RoomPriceModel {
   hourly('hourly'),
   perDay('perDay');
