@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/features/services/data/models/service_model.dart';
-import 'package:sonara/core/theme/app_theme.dart';
 import 'package:sonara/features/services/presentation/service_provider.dart';
 import 'package:sonara/features/services/data/enums/service_enums.dart';
 import 'widgets/add_ons_section.dart';
@@ -236,7 +235,7 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _submit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: kAccent,
+                      backgroundColor: Color.fromRGBO(255, 106, 0, 1),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
