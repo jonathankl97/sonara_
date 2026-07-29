@@ -1,0 +1,126 @@
+appId: com.jonathanklomfass.sonara.dev
+---
+
+# Voraussetzung: App ist gestartet, User ist eingeloggt als Provider, auf dem Dashboard
+
+- assertVisible: "Schnelle Aktionen"
+
+# 1. Zum Erstellen-Screen navigieren
+- tapOn: "Vermietung einrichten"
+- assertVisible: "Vermietung einrichten"
+
+# 2. Basisinformation
+- tapOn: "z.B. Studio Sonara"
+- inputText: "E2E Test Tonstudio"
+- tapOn:
+    point: "50%,10%"
+- scrollUntilVisible:
+    element: "Beschreibung*"
+    direction: DOWN
+- tapOn: "Beschreibe dein Studio..."
+- inputText: "Ein automatisiert erstelltes Tonstudio fuer den E2E-Test mit allen Pflichtfeldern."
+- tapOn:
+    point: "50%,10%"
+
+# 3. Standort
+- scrollUntilVisible:
+    element: "Adresse*"
+    direction: DOWN
+- tapOn: "Musterstraße 13"
+- inputText: "Teststrasse 42"
+- tapOn:
+    point: "50%,10%"
+
+- tapOn:
+    text: "Berlin"
+    below: "Stadt*"
+- inputText: "Hamburg"
+- tapOn:
+    point: "50%,10%"
+
+- tapOn: "14169"
+- inputText: "20095"
+- tapOn:
+    point: "50%,10%"
+
+- scrollUntilVisible:
+    element: "Bundesland*"
+    direction: DOWN
+- tapOn:
+    text: "Berlin"
+    below: "Bundesland*"
+- inputText: "Hamburg"
+- tapOn:
+    point: "50%,10%"
+
+- tapOn: "Deutschland"
+- inputText: "Deutschland"
+- tapOn:
+    point: "50%,10%"
+
+# 4. Equipment — eins hinzufügen
+- scrollUntilVisible:
+    element: "Equipment hinzufügen"
+    direction: DOWN
+- tapOn: "Equipment hinzufügen"
+- scrollUntilVisible:
+    element: "z.B. Logic Pro, Neumann U87"
+    direction: DOWN
+- tapOn: "z.B. Logic Pro, Neumann U87"
+- inputText: "Neumann U87"
+- tapOn: "Vermietung einrichten"
+
+# 5. Ausstattung — ein paar Amenities antippen
+- scrollUntilVisible:
+    element: "Ausstattung"
+    direction: DOWN
+- tapOn: "WIFI"
+- tapOn: "Parkplatz"
+
+# 6. Größe & Kapazität
+- scrollUntilVisible:
+    element: "Größe (m²)"
+    direction: DOWN
+- tapOn: "z.B. 65"
+- inputText: "45"
+- tapOn:
+    point: "50%,10%"
+- tapOn: "z.B. 4"
+- inputText: "3"
+
+
+# 7. Preisgestaltung — Stundenpreis ist Default
+- scrollUntilVisible:
+    element: "Basispreis (€)*"
+    direction: DOWN
+- tapOn: "z.B. 60"
+- inputText: "55"
+- tapOn:
+    point: "50%,10%"
+
+# 8. Bilder — Foto mit Kamera aufnehmen
+- scrollUntilVisible:
+    element: "Bilder hochladen"
+    direction: DOWN
+- tapOn: "Bilder hochladen"
+- tapOn: "Kamera"
+# Android Emulator Kamera — Auslöser drücken
+- tapOn:
+    id: "com.android.camera2:id/shutter_button"
+    optional: true
+# Foto bestätigen
+- tapOn:
+    id: "com.android.camera2:id/done_button"
+    optional: true
+
+# 9. Buchungsmodus — Default belassen
+
+# 10. Submit
+- scrollUntilVisible:
+    element: "Vermietung starten"
+    direction: DOWN
+- tapOn: "Vermietung starten"
+
+# 11. Erfolg prüfen
+- assertVisible: "Vermietung erfolgreich erstellt"
+- assertVisible: "Schnelle Aktionen"
