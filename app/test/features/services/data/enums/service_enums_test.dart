@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sonara/features/services/data/enums/service_enums.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 void main() {
   group('ServiceType', () {

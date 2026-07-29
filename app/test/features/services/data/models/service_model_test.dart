@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sonara/features/services/data/enums/service_enums.dart';
 import 'package:sonara/features/services/data/models/service_model.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 void main() {
   // Vollstaendiges JSON wie es vom Backend kommt.

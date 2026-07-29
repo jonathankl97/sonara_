@@ -3,6 +3,7 @@ import 'package:sonara/features/rooms/data/enums/room_enums.dart';
 import 'package:sonara/features/rooms/data/models/opening_hours_model.dart';
 import 'package:sonara/features/rooms/data/models/room_equipment_model.dart';
 import 'package:sonara/features/rooms/data/models/room_model.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 void main() {
   final fullJson = {
@@ -49,7 +50,7 @@ void main() {
       );
       expect(room.roomType, RoomType.recordingStudio);
       expect(room.priceModel, RoomPriceModel.hourly);
-      expect(room.bookingMode, RoomBookingMode.onRequest);
+      expect(room.bookingMode, BookingMode.onRequest);
       expect(room.basePrice, 60.0);
       expect(room.sizeSqm, 45);
       expect(room.capacity, 4);
@@ -130,7 +131,7 @@ void main() {
         description: 'Aufnahmeraum',
         roomType: RoomType.recordingStudio,
         priceModel: RoomPriceModel.hourly,
-        bookingMode: RoomBookingMode.onRequest,
+        bookingMode: BookingMode.onRequest,
         basePrice: 60,
         address: 'Musterstrasse 13',
         city: 'Berlin',
@@ -176,7 +177,7 @@ void main() {
         description: 'Test',
         roomType: RoomType.rehearsalRoom,
         priceModel: RoomPriceModel.hourly,
-        bookingMode: RoomBookingMode.onRequest,
+        bookingMode: BookingMode.onRequest,
         basePrice: 40,
         address: 'Test',
         city: 'Test',
@@ -198,7 +199,7 @@ void main() {
         description: 'Minimal',
         roomType: RoomType.other,
         priceModel: RoomPriceModel.perDay,
-        bookingMode: RoomBookingMode.onRequest,
+        bookingMode: BookingMode.onRequest,
         basePrice: 200,
         address: 'A',
         city: 'B',
@@ -220,7 +221,7 @@ void main() {
         description: 'Test',
         roomType: RoomType.djBooth,
         priceModel: RoomPriceModel.perDay,
-        bookingMode: RoomBookingMode.weeklyAvailability,
+        bookingMode: BookingMode.weeklyAvailability,
         basePrice: 300,
         address: 'A',
         city: 'B',

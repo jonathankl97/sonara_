@@ -1,4 +1,5 @@
 import 'package:sonara/features/services/data/enums/service_enums.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 class ServiceAddOnModel {
   final String title;

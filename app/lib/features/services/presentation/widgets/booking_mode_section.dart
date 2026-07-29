@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sonara/core/theme/app_theme.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
-import 'package:sonara/features/services/data/enums/service_enums.dart';
 
 class BookingModeSection extends StatelessWidget {
   final BookingMode selected;

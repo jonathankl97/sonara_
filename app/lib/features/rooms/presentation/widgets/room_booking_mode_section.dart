@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sonara/core/theme/app_theme.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
-import 'package:sonara/features/rooms/data/enums/room_enums.dart';
 
 class RoomBookingModeSection extends StatelessWidget {
-  final RoomBookingMode selected;
-  final ValueChanged<RoomBookingMode> onChanged;
+  final BookingMode selected;
+  final ValueChanged<BookingMode> onChanged;
 
   const RoomBookingModeSection({
     super.key,
@@ -20,7 +20,7 @@ class RoomBookingModeSection extends StatelessWidget {
       children: [
         const SectionTitle('Wie möchtest du Buchungen verwalten?'),
         const SizedBox(height: 12),
-        RadioGroup<RoomBookingMode>(
+        RadioGroup<BookingMode>(
           groupValue: selected,
           onChanged: (v) {
             if (v != null) onChanged(v);
@@ -29,11 +29,11 @@ class RoomBookingModeSection extends StatelessWidget {
             children: [
               _buildRadioTile(
                 label: 'Buchung auf Anfrage (kein Kalender)',
-                value: RoomBookingMode.onRequest,
+                value: BookingMode.onRequest,
               ),
               _buildRadioTile(
                 label: 'Feste wöchentliche Verfügbarkeit',
-                value: RoomBookingMode.weeklyAvailability,
+                value: BookingMode.weeklyAvailability,
               ),
             ],
           ),
@@ -42,17 +42,14 @@ class RoomBookingModeSection extends StatelessWidget {
     );
   }
 
-  Widget _buildRadioTile({
-    required String label,
-    required RoomBookingMode value,
-  }) {
+  Widget _buildRadioTile({required String label, required BookingMode value}) {
     return GestureDetector(
       onTap: () => onChanged(value),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Row(
           children: [
-            Radio<RoomBookingMode>(value: value, activeColor: kAccent),
+            Radio<BookingMode>(value: value, activeColor: kAccent),
             const SizedBox(width: 4),
             Text(label, style: const TextStyle(fontSize: 13)),
           ],

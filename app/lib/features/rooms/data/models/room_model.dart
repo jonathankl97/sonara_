@@ -1,6 +1,7 @@
 import 'package:sonara/features/rooms/data/enums/room_enums.dart';
 import 'package:sonara/features/rooms/data/models/opening_hours_model.dart';
 import 'package:sonara/features/rooms/data/models/room_equipment_model.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 class RoomModel {
   // Beim Erstellen noch nicht vorhanden -> nullable.
@@ -13,7 +14,7 @@ class RoomModel {
 
   final RoomType roomType;
   final RoomPriceModel priceModel;
-  final RoomBookingMode bookingMode;
+  final BookingMode bookingMode;
 
   // Immer Pflicht (kein inquiry bei Rooms).
   final double basePrice;
@@ -72,7 +73,7 @@ class RoomModel {
 
       roomType: RoomType.fromValue(json['roomType'] as String),
       priceModel: RoomPriceModel.fromValue(json['priceModel'] as String),
-      bookingMode: RoomBookingMode.fromValue(json['bookingMode'] as String),
+      bookingMode: BookingMode.fromValue(json['bookingMode'] as String),
 
       basePrice: _parsePrice(json['basePrice']) ?? 0,
 
