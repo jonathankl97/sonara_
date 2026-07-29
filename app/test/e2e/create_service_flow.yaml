@@ -1,0 +1,59 @@
+appId: com.jonathanklomfass.sonara.dev
+---
+
+# Voraussetzung: App ist gestartet, User ist eingeloggt als Provider, auf dem Dashboard
+
+- assertVisible: "Schnelle Aktionen"
+
+# 1. Zum Erstellen-Screen navigieren
+- tapOn: "Neue Dienstleistung hinzufügen"
+- assertVisible: "Neuen Service erstellen"
+
+# 2. Basisinformation ausfüllen
+- tapOn: "z.B. Professionelles Mixing"
+- inputText: "E2E Test Mixing Service"
+- scrollUntilVisible:
+    element: "Beschreibe deinen Service..."
+    direction: DOWN
+- tapOn: "Beschreibe deinen Service..."
+- inputText: "Dies ist ein automatisierter E2E-Test Service fuer Mixing und Mastering."
+
+# 3. Service Details — Servicetyp ist Mixing (Default), Ort ist Remote (Default)
+- scrollUntilVisible:
+    element: "Max. Audiolänge (Minuten)"
+    direction: DOWN
+- tapOn: "z.B. 5"
+- inputText: "10"
+
+# 4. Genres überspringen (optional)
+
+# 5. Kernleistungen — eine hinzufügen
+- scrollUntilVisible:
+    element: "Leistung hinzufügen"
+    direction: DOWN
+- tapOn: "Leistung hinzufügen"
+- tapOn: "z.B. EQ & Kompression"
+- inputText: "Professionelles EQ und Kompression"
+
+# 6. Add-ons überspringen (optional)
+
+# 7. Revisionen überspringen (optional)
+
+# 8. Preisgestaltung — Preis eingeben (Fixpreis ist Default)
+- scrollUntilVisible:
+    element: "Basispreis*"
+    direction: DOWN
+- tapOn: "z.B. 150"
+- inputText: "199"
+
+# 9. Buchungsmodus — auf Anfrage ist Default, belassen
+
+# 10. Submit
+- scrollUntilVisible:
+    element: "Service erstellen"
+    direction: DOWN
+- tapOn: "Service erstellen"
+
+# 11. Erfolg prüfen
+- assertVisible: "Service erfolgreich erstellt"
+- assertVisible: "Schnelle Aktionen"
