@@ -31,3 +31,6 @@ app/build/
 
 
 **/firebase-service-account.json
+
+# E2E
+*.maestro.*
