@@ -1,4 +1,5 @@
 import {
+  ArrayMinSize,
   IsArray,
   IsEnum,
   IsInt,
@@ -102,8 +103,9 @@ export class CreateRoomDto {
   equipment?: RoomEquipmentDto[];
 
   @IsArray()
+  @ArrayMinSize(1)
   @IsUrl({}, { each: true })
-  imageUrls?: string[];
+  imageUrls!: string[];
 
   @IsOptional()
   @ValidateNested()
