@@ -22,6 +22,7 @@ function validPayload(overrides: Partial<CreateRoomDto> = {}) {
     priceModel: RoomPriceModel.HOURLY,
     basePrice: 60,
     bookingMode: BookingMode.ON_REQUEST,
+    imageUrls: ['https://example.com/studio-a.jpg'], // ← neu
     ...overrides,
   };
 }
