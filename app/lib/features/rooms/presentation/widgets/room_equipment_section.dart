@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sonara/features/rooms/data/models/room_equipment_model.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
 import 'package:sonara/features/rooms/data/enums/room_enums.dart';
-import 'package:sonara/features/services/presentation/widgets/form_helpers.dart';
+import 'package:sonara/shared/widgets/form_helpers.dart';
 
 class RoomEquipmentSection extends StatelessWidget {
   final List<EquipmentEntry> entries;

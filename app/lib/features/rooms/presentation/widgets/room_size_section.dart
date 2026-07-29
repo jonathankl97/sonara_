@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sonara/features/services/presentation/widgets/form_helpers.dart';
+import 'package:sonara/shared/widgets/form_helpers.dart';
 
 class RoomSizeSection extends StatelessWidget {
   final TextEditingController sizeSqmController;

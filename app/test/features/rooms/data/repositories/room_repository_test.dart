@@ -6,6 +6,7 @@ import 'package:sonara/core/network/api_client.dart';
 import 'package:sonara/features/rooms/data/enums/room_enums.dart';
 import 'package:sonara/features/rooms/data/models/room_model.dart';
 import 'package:sonara/features/rooms/data/repositories/room_repository.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 class MockApiClient extends Mock implements ApiClient {}
 
@@ -42,7 +43,7 @@ void main() {
         description: 'Aufnahmeraum',
         roomType: RoomType.recordingStudio,
         priceModel: RoomPriceModel.hourly,
-        bookingMode: RoomBookingMode.onRequest,
+        bookingMode: BookingMode.onRequest,
         basePrice: 60,
         address: 'Musterstrasse 13',
         city: 'Berlin',
@@ -77,7 +78,7 @@ void main() {
         description: 'Test',
         roomType: RoomType.other,
         priceModel: RoomPriceModel.hourly,
-        bookingMode: RoomBookingMode.onRequest,
+        bookingMode: BookingMode.onRequest,
         basePrice: 40,
         address: 'A',
         city: 'B',

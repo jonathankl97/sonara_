@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sonara/features/rooms/data/enums/room_enums.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 void main() {
   group('RoomType', () {
@@ -70,20 +71,20 @@ void main() {
 
   group('RoomBookingMode', () {
     test('fromValue gibt korrekten Enum-Wert zurueck', () {
-      expect(RoomBookingMode.fromValue('onRequest'), RoomBookingMode.onRequest);
+      expect(BookingMode.fromValue('onRequest'), BookingMode.onRequest);
       expect(
-        RoomBookingMode.fromValue('weeklyAvailability'),
-        RoomBookingMode.weeklyAvailability,
+        BookingMode.fromValue('weeklyAvailability'),
+        BookingMode.weeklyAvailability,
       );
     });
 
     test('fromValue faellt bei unbekanntem Wert auf onRequest zurueck', () {
-      expect(RoomBookingMode.fromValue('instant'), RoomBookingMode.onRequest);
+      expect(BookingMode.fromValue('instant'), BookingMode.onRequest);
     });
 
     test('value gibt korrekten String zurueck', () {
-      expect(RoomBookingMode.onRequest.value, 'onRequest');
-      expect(RoomBookingMode.weeklyAvailability.value, 'weeklyAvailability');
+      expect(BookingMode.onRequest.value, 'onRequest');
+      expect(BookingMode.weeklyAvailability.value, 'weeklyAvailability');
     });
   });
 }

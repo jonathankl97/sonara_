@@ -6,6 +6,7 @@ import 'package:sonara/core/network/api_client.dart';
 import 'package:sonara/features/services/data/enums/service_enums.dart';
 import 'package:sonara/features/services/data/models/service_model.dart';
 import 'package:sonara/features/services/data/repositories/service_repository.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 class MockApiClient extends Mock implements ApiClient {}
 

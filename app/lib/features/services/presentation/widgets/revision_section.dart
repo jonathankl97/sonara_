@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
-import 'form_helpers.dart';
+import '../../../../shared/widgets/form_helpers.dart';
 
 class RevisionsSection extends StatelessWidget {
   final bool offersRevisions;

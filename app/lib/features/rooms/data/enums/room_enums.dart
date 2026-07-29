@@ -64,19 +64,4 @@ enum RoomEquipmentCategory {
   }
 }
 
-// Dupliziert aus service_enums.dart — spaeter in eine geteilte
-// Datei (z.B. shared/enums/booking_mode.dart) auslagern.
-enum RoomBookingMode {
-  onRequest('onRequest'),
-  weeklyAvailability('weeklyAvailability');
 
-  final String value;
-  const RoomBookingMode(this.value);
-
-  static RoomBookingMode fromValue(String value) {
-    return RoomBookingMode.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => RoomBookingMode.onRequest,
-    );
-  }
-}

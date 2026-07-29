@@ -5,6 +5,7 @@ import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/features/services/data/models/service_model.dart';
 import 'package:sonara/features/services/presentation/service_provider.dart';
 import 'package:sonara/features/services/data/enums/service_enums.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 import 'widgets/add_ons_section.dart';
 import 'widgets/booking_mode_section.dart';
 import 'widgets/core_services_section.dart';
@@ -227,7 +228,8 @@ class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
                 gap,
                 BookingModeSection(
                   selected: _selectedBookingMode,
-                  onChanged: (v) => setState(() => _selectedBookingMode = v),
+                  onChanged: (v) =>
+                      setState(() => _selectedBookingMode = v),
                 ),
                 gap,
                 SizedBox(

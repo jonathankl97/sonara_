@@ -17,6 +17,7 @@ import 'package:sonara/features/rooms/presentation/widgets/room_location_section
 import 'package:sonara/features/rooms/presentation/widgets/room_opening_hours_section.dart';
 import 'package:sonara/features/rooms/presentation/widgets/room_pricing_section.dart';
 import 'package:sonara/features/rooms/presentation/widgets/room_size_section.dart';
+import 'package:sonara/shared/enums/booking_mode.dart';
 
 class CreateRoomRentalScreen extends ConsumerStatefulWidget {
   const CreateRoomRentalScreen({super.key});
@@ -47,7 +48,7 @@ class _CreateRoomRentalScreenState
   // ── Dropdown-/Auswahl-State ──
   RoomType _selectedRoomType = RoomType.recordingStudio;
   RoomPriceModel _selectedPriceModel = RoomPriceModel.hourly;
-  RoomBookingMode _selectedBookingMode = RoomBookingMode.onRequest;
+  BookingMode _selectedBookingMode = BookingMode.onRequest;
 
   //Listen
   final List<EquipmentEntry> _selectedEquipmentEntries = [];
@@ -300,8 +301,7 @@ class _CreateRoomRentalScreenState
                     onChanged: (v) => setState(() => _selectedBookingMode = v),
                   ),
                   gap,
-                  if (_selectedBookingMode ==
-                      RoomBookingMode.weeklyAvailability)
+                  if (_selectedBookingMode == BookingMode.weeklyAvailability)
                     RoomOpeningHoursSection(
                       selectedDays: _selectedDays,
                       onDaysChanged: (v) => setState(() => _selectedDays = v),
