@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/features/navigation/presentation/home_screen.dart';
 import 'package:sonara/features/rooms/presentation/create_room_rental_screen.dart';
+import 'package:sonara/features/search/presentation/discovery_screen.dart';
 import 'package:sonara/shared/models/user_model.dart';
 import 'package:sonara/features/auth/credentials_screen.dart';
 import 'package:sonara/features/auth/genre_selection_screen.dart';
@@ -122,10 +123,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: '/home',
-            builder: (context, state) => const Scaffold(
-              body: Center(child: Text('Discovery — kommt gleich')),
-            ),
+            builder: (context, state) => const DiscoveryScreen(),
           ),
+
           GoRoute(
             path: '/dashboard',
             builder: (context, state) => const DashboardScreen(),
