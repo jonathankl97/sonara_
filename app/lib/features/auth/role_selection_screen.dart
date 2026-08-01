@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 
-const _roles = [
+const _providerRoles = [
   'Produzent',
   'Beat Maker',
   'DJ',
@@ -13,6 +13,21 @@ const _roles = [
   'Studiobesitzer',
   'Songwriter',
   'Sounddesigner',
+];
+
+const _artistRoles = [
+  'Rapper',
+  'Sänger',
+  'Songwriter',
+  'Produzent',
+  'Beat Maker',
+  'DJ',
+  'Musiker',
+  'Band',
+  'Instrumentalist',
+  'Podcaster',
+  'Synchronsprecher',
+  'Content Creator',
 ];
 
 class RolesSelectionScreen extends ConsumerStatefulWidget {
@@ -35,6 +50,7 @@ class _RolesSelectionScreenState extends ConsumerState<RolesSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final roles = (widget.role == 'provider') ? _providerRoles : _artistRoles;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -81,7 +97,7 @@ class _RolesSelectionScreenState extends ConsumerState<RolesSelectionScreen> {
                     Wrap(
                       spacing: 8,
                       runSpacing: 10,
-                      children: _roles.map((tag) {
+                      children: roles.map((tag) {
                         final isSelected = _selected.contains(tag);
                         return GestureDetector(
                           onTap: () => setState(() {
