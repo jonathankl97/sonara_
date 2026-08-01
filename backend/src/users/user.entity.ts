@@ -8,6 +8,8 @@ import {
 } from 'typeorm';
 
 import { Review } from './review.entity';
+import { Service } from '../services/service.entity';
+import { Room } from '../rooms/room.entity';
 
 export enum UserRole {
   ARTIST = 'artist',
@@ -87,6 +89,12 @@ export class User {
         popularity: number;
       }[]
     | null;
+
+  @OneToMany(() => Service, (service) => service.provider)
+  services!: Service[];
+
+  @OneToMany(() => Room, (room) => room.provider)
+  rooms!: Room[];
 
   @CreateDateColumn()
   createdAt!: Date;

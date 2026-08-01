@@ -5,7 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { User } from '../users/user.entity';
 
 export enum ServiceType {
   RECORDING = 'recording',
@@ -50,8 +53,10 @@ export class Service {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  // FK auf den Provider (users.id). Indexiert, da GET /services/me und
-  // spaeter die Discovery hierueber joinen.
+  @ManyToOne(() => User, (user) => user.services, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'providerId' })
+  provider!: User;
+
   @Index()
   @Column({ type: 'uuid' })
   providerId!: string;
