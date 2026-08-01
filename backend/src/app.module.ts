@@ -13,6 +13,7 @@ import { Service } from './services/service.entity';
 import { Room } from './rooms/room.entity';
 import { RoomsModule } from './rooms/rooms.module';
 import { ServicesModule } from './services/services.module';
+import { DiscoveryModule } from './discovery/discovery.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ServicesModule } from './services/services.module';
     SpotifyModule,
     ServicesModule,
     RoomsModule,
+    DiscoveryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
