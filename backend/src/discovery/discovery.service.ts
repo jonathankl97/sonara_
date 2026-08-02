@@ -54,7 +54,6 @@ export class DiscoveryService {
     }
 
     if (dto.genres) {
-      // simple-array speichert kommasepariert — LIKE-Suche pro Genre.
       const genreList = dto.genres.split(',').map((g) => g.trim());
       for (let i = 0; i < genreList.length; i++) {
         serviceQuery.andWhere(`service.genres LIKE :genre${i}`, {
@@ -131,7 +130,6 @@ export class DiscoveryService {
     }
 
     if (dto.amenities) {
-      // simple-array speichert kommasepariert — LIKE-Suche pro Amenity.
       const amenityList = dto.amenities.split(',').map((a) => a.trim());
       for (let i = 0; i < amenityList.length; i++) {
         query.andWhere(`room.amenities LIKE :amenity${i}`, {
@@ -172,6 +170,7 @@ export class DiscoveryService {
         basePrice: service.basePrice,
         priceModel: service.priceModel,
         location: service.location,
+        bookingMode: service.bookingMode,
         genres: service.genres,
       })),
     };
@@ -187,16 +186,15 @@ export class DiscoveryService {
       address: room.address,
       basePrice: room.basePrice,
       priceModel: room.priceModel,
+      bookingMode: room.bookingMode,
       capacity: room.capacity,
       amenities: room.amenities,
       imageUrls: room.imageUrls,
-      provider: room.provider
-        ? {
-            id: room.provider.id,
-            displayName: room.provider.displayName,
-            profileImageUrl: room.provider.profileImageUrl,
-          }
-        : null,
+      provider: {
+        id: room.provider.id,
+        displayName: room.provider.displayName,
+        profileImageUrl: room.provider.profileImageUrl,
+      },
     };
   }
 }
