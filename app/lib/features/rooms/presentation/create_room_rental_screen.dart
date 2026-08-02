@@ -88,7 +88,6 @@ class _CreateRoomRentalScreenState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();

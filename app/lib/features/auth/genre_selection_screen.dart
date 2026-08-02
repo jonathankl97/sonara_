@@ -60,7 +60,7 @@ class _GenreSelectionScreenState extends ConsumerState<GenreSelectionScreen> {
       }
 
       // 3. Backend Call — User im Backend anlegen
-      await apiClient.post(
+      await ref.read(apiClientProvider).post(
         '/auth/register',
         data: {
           'name': widget.credentials['name'],

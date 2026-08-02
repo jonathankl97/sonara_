@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/shared/widgets/empty_state.dart';
+import 'package:sonara/shared/widgets/error_snackbar.dart';
 import 'package:sonara/shared/widgets/section_title.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:sonara/shared/enums/genres.dart';
@@ -19,9 +20,13 @@ class GenreSection extends ConsumerWidget {
       ),
       builder: (ctx) => _GenreBottomSheet(
         current: current,
-        onSave: (selected) {
-          ref.read(userProvider.notifier).updateGenres(selected);
-          Navigator.pop(ctx);
+        onSave: (selected) async {
+          try {
+            await ref.read(userProvider.notifier).updateGenres(selected);
+            if (ctx.mounted) Navigator.pop(ctx);
+          } catch (e) {
+            if (ctx.mounted) showErrorSnackbar(ctx, e);
+          }
         },
       ),
     );

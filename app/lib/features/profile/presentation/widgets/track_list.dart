@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/features/profile/data/music_track_model.dart';
 import 'package:sonara/features/profile/presentation/user_provider.dart';
 import 'package:sonara/features/profile/presentation/widgets/track_card.dart';
+import 'package:sonara/shared/widgets/error_snackbar.dart';
 
 class TrackList extends ConsumerWidget {
   final List<MusicTrackModel> tracks;
@@ -47,7 +48,11 @@ class TrackList extends ConsumerWidget {
     );
 
     if (confirm == true) {
-      await ref.read(userProvider.notifier).removeMusicTrack(trackId);
+      try {
+        await ref.read(userProvider.notifier).removeMusicTrack(trackId);
+      } catch (e) {
+        if (context.mounted) showErrorSnackbar(context, e);
+      }
     }
   }
 

@@ -52,5 +52,5 @@ class RoomRepository {
 }
 
 final roomRepositoryProvider = Provider<RoomRepository>((ref) {
-  return RoomRepository(apiClient);
+  return RoomRepository(ref.read(apiClientProvider));
 });

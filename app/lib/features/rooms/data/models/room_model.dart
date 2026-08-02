@@ -86,11 +86,15 @@ class RoomModel {
       state: json['state'] as String,
       country: json['country'] as String,
 
-      amenities:
-          (json['amenities'] as List<dynamic>?)
-              ?.map((a) => a as String)
-              .toList() ??
-          [],
+      amenities: json['amenities'] is String
+          ? (json['amenities'] as String)
+                .split(',')
+                .map((e) => e.trim())
+                .toList()
+          : (json['amenities'] as List<dynamic>?)
+                    ?.map((a) => a as String)
+                    .toList() ??
+                [],
 
       equipment:
           (json['equipment'] as List<dynamic>?)

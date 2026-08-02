@@ -55,5 +55,5 @@ class ServiceRepository {
 }
 
 final serviceRepositoryProvider = Provider<ServiceRepository>((ref) {
-  return ServiceRepository(apiClient);
+  return ServiceRepository(ref.read(apiClientProvider));
 });
