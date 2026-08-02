@@ -33,7 +33,7 @@ jobs:
 
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: false # Disable deployment for now, until we have a staging environment
     runs-on: ubuntu-latest
     defaults:
       run:
