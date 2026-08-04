@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sonara/features/discovery/presentation/edit_room_screen.dart';
+import 'package:sonara/features/discovery/presentation/provider_detail_screen.dart';
+import 'package:sonara/features/discovery/presentation/room_detail_screen.dart';
 import 'package:sonara/features/navigation/presentation/home_screen.dart';
 import 'package:sonara/features/rooms/presentation/create_room_rental_screen.dart';
 import 'package:sonara/features/discovery/presentation/discovery_screen.dart';
@@ -117,6 +120,30 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/rooms/create',
         builder: (context, state) => const CreateRoomRentalScreen(),
+      ),
+      // Neu (Provider Dashboard — gleicher Detail-Screen, andere Route):
+      GoRoute(
+        path: '/rooms/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return RoomDetailScreen(roomId: id);
+        },
+      ),
+
+      // Neu (Provider Edit):
+      GoRoute(
+        path: '/rooms/:id/edit',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return EditRoomScreen(roomId: id);
+        },
+      ),
+      GoRoute(
+        path: '/providers/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return ProviderDetailScreen(providerId: id);
+        },
       ),
       ShellRoute(
         builder: (context, state, child) => HomeScreen(child: child),
