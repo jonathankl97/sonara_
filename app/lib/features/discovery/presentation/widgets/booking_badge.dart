@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 
 class BookingBadge extends StatelessWidget {
+  final Color backgroundColor;
   final bool sofortBuchbar;
 
-  const BookingBadge({super.key, required this.sofortBuchbar});
+  const BookingBadge({super.key, required this.backgroundColor, required this.sofortBuchbar});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.72),
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(

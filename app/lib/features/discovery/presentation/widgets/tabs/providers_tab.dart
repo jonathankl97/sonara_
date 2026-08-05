@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sonara/features/discovery/presentation/providers/provider_discovery_notifier.dart';
 import 'package:sonara/features/discovery/presentation/widgets/provider_card.dart';
 import 'package:sonara/features/discovery/presentation/widgets/section_header.dart';
@@ -81,7 +82,7 @@ class ProvidersTab extends ConsumerWidget {
                     return ProviderCard(
                       provider: provider,
                       onTap: () {
-                        // TODO: Provider-Detail-Screen navigieren
+                        context.push('/providers/${provider.id}');
                       },
                     );
                   },

@@ -7,15 +7,23 @@ import 'package:sonara/shared/enums/booking_mode.dart';
 class RoomCard extends StatelessWidget {
   final RoomSearchResult room;
   final VoidCallback? onTap;
+  final double? width;
+  final double imageHeight;
 
-  const RoomCard({super.key, required this.room, this.onTap});
+  const RoomCard({
+    super.key,
+    required this.room,
+    this.onTap,
+    this.width,
+    this.imageHeight = 140,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: 200,
+        width: width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -23,7 +31,7 @@ class RoomCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: SizedBox(
-                height: 140,
+                height: imageHeight,
                 width: double.infinity,
                 child: Stack(
                   fit: StackFit.expand,
@@ -41,6 +49,7 @@ class RoomCard extends StatelessWidget {
                       bottom: 8,
                       left: 8,
                       child: BookingBadge(
+                        backgroundColor: Colors.black.withValues(alpha: 0.72),
                         sofortBuchbar:
                             room.bookingMode == BookingMode.weeklyAvailability,
                       ),
@@ -103,24 +112,20 @@ class RoomCard extends StatelessWidget {
             // Rating + Preis
             Row(
               children: [
-                const Icon(Icons.star, color: kAccent, size: 14),
-                const SizedBox(width: 3),
-                const Text(
-                  '4,6',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+                if (room.ratingCount > 0 && room.ratingAverage > 1) ...[
+                  const Icon(Icons.star, color: kAccent, size: 14),
+                  const SizedBox(width: 3),
+                  Text(
+                    room.ratingAverage.toString(),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
+                ],
                 const Spacer(),
-                Text(
-                  room.priceLabel,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0x99FFFFFF),
-                  ),
-                ),
+                ...room.priceLabel,
               ],
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sonara/features/discovery/presentation/providers/room_discovery_notifier.dart';
 import 'package:sonara/features/discovery/presentation/widgets/room_card.dart';
 import 'package:sonara/features/discovery/presentation/widgets/section_header.dart';
@@ -61,11 +62,10 @@ class RoomsTab extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              // Sektion: Beliebte Studios
               DiscoverySectionHeader(
                 title: 'Beliebte Studios',
                 onShowAll: () {
-                  // TODO: Vollstaendige Liste
+                  context.push('/discovery/rooms/category/popular');
                 },
               ),
               const SizedBox(height: 14),
@@ -79,19 +79,19 @@ class RoomsTab extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return RoomCard(
                       room: state.rooms[index],
+                      width: 200,
                       onTap: () {
-                        // TODO: Room-Detail-Screen
+                        context.push('/rooms/${state.rooms[index].id}');
                       },
                     );
                   },
                 ),
               ),
               const SizedBox(height: 30),
-              // Sektion: In deiner Naehe (Platzhalter — braucht spaeter Geo-Daten)
               DiscoverySectionHeader(
                 title: 'Studios in deiner Nähe',
                 onShowAll: () {
-                  // TODO: Geo-basierte Liste
+                  context.push('/discovery/rooms/category/nearby');
                 },
               ),
               const SizedBox(height: 14),
@@ -105,8 +105,9 @@ class RoomsTab extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return RoomCard(
                       room: state.rooms[index],
+                      width: 200,
                       onTap: () {
-                        // TODO: Room-Detail-Screen
+                        context.push('/rooms/${state.rooms[index].id}');
                       },
                     );
                   },

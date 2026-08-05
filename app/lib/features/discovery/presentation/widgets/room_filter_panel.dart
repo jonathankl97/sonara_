@@ -2,16 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/theme/app_theme.dart';
 import 'package:sonara/features/discovery/presentation/providers/room_filter_state.dart';
-
-const _roomTypeLabels = {
-  'recordingStudio': 'Tonstudio',
-  'rehearsalRoom': 'Proberaum',
-  'productionSuite': 'Produktionsraum',
-  'podcastStudio': 'Podcast Studio',
-  'vocalBooth': 'Vocal Booth',
-  'djBooth': 'DJ Booth',
-  'other': 'Sonstiges',
-};
+import 'package:sonara/features/rooms/data/enums/room_enums.dart';
+import 'package:sonara/shared/widgets/section_title.dart';
 
 const _amenityOptions = [
   'WIFI',
@@ -134,7 +126,7 @@ class _RoomFilterPanelState extends ConsumerState<RoomFilterPanel> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   children: [
                     // ── Standort ──
-                    _buildSectionLabel('Standort'),
+                    SectionTitle('Standort'),
                     const SizedBox(height: 8),
                     _buildTextField(
                       value: _city,
@@ -144,7 +136,7 @@ class _RoomFilterPanelState extends ConsumerState<RoomFilterPanel> {
                     const SizedBox(height: 20),
 
                     // ── Preis ──
-                    _buildSectionLabel('Preis'),
+                    SectionTitle('Preis'),
                     const SizedBox(height: 8),
                     RangeSlider(
                       values: _priceRange,
@@ -191,19 +183,21 @@ class _RoomFilterPanelState extends ConsumerState<RoomFilterPanel> {
                     const SizedBox(height: 20),
 
                     // ── Raumtyp ──
-                    _buildSectionLabel('Raumtyp'),
+                    SectionTitle('Raumtyp'),
                     const SizedBox(height: 12),
                     Wrap(
                       spacing: 8,
                       runSpacing: 10,
-                      children: _roomTypeLabels.entries.map((entry) {
-                        final isSelected = _selectedRoomType == entry.key;
+                      children: RoomType.values.map((type) {
+                        final isSelected = _selectedRoomType == type.value;
                         return _buildChip(
-                          label: entry.value,
+                          label: type.label,
                           isSelected: isSelected,
                           onTap: () {
                             setState(() {
-                              _selectedRoomType = isSelected ? null : entry.key;
+                              _selectedRoomType = isSelected
+                                  ? null
+                                  : type.value;
                             });
                           },
                         );
@@ -212,7 +206,7 @@ class _RoomFilterPanelState extends ConsumerState<RoomFilterPanel> {
                     const SizedBox(height: 20),
 
                     // ── Kapazität ──
-                    _buildSectionLabel('Mindestkapazität (Personen)'),
+                    SectionTitle('Mindestkapazität (Personen)'),
                     const SizedBox(height: 8),
                     SizedBox(
                       width: 120,
@@ -253,7 +247,7 @@ class _RoomFilterPanelState extends ConsumerState<RoomFilterPanel> {
                     const SizedBox(height: 20),
 
                     // ── Ausstattung ──
-                    _buildSectionLabel('Ausstattung'),
+                    SectionTitle('Ausstattung'),
                     const SizedBox(height: 12),
                     Wrap(
                       spacing: 8,
@@ -308,17 +302,6 @@ class _RoomFilterPanelState extends ConsumerState<RoomFilterPanel> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildSectionLabel(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        color: Colors.white,
-      ),
     );
   }
 
