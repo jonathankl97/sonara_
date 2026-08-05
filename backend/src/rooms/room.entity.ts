@@ -133,6 +133,12 @@ export class Room {
   @Column({ type: 'enum', enum: BookingMode })
   bookingMode!: BookingMode;
 
+  @Column({ type: 'varchar', nullable: true })
+  ratingAverage!: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  ratingCount!: number | null;
+
   @Column({ type: 'boolean', default: true })
   isActive!: boolean;
 

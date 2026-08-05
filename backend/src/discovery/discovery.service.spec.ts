@@ -4,7 +4,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DiscoveryService } from './discovery.service';
-import { User, UserRole } from '../users/user.entity';
+import { User } from '../users/user.entity';
 import {
   Service,
   ServiceType,
@@ -35,6 +35,7 @@ function createMockQueryBuilder(result: [any[], number] = [[], 0]) {
     getParameters: jest.fn().mockReturnValue({}),
     getManyAndCount: jest.fn().mockResolvedValue(result),
   };
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return qb;
 }
 

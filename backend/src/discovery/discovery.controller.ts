@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
 import { DiscoveryService } from './discovery.service';
 import { SearchProvidersDto } from './dto/search-providers.dto';
@@ -14,8 +14,18 @@ export class DiscoveryController {
     return this.discoveryService.searchProviders(dto);
   }
 
+  @Get('providers/:id')
+  async getProviderDetail(@Param('id') id: string) {
+    return this.discoveryService.getProviderDetail(id);
+  }
+
   @Get('rooms')
   async searchRooms(@Query() dto: SearchRoomsDto) {
     return this.discoveryService.searchRooms(dto);
+  }
+
+  @Get('rooms/:id')
+  async getRoomDetail(@Param('id') id: string) {
+    return this.discoveryService.getRoomDetail(id);
   }
 }

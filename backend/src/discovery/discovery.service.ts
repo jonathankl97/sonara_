@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User, UserRole } from '../users/user.entity';
@@ -154,6 +154,53 @@ export class DiscoveryService {
     };
   }
 
+  async getRoomDetail(id: string) {
+    const room = await this.roomRepo.findOne({
+      where: { id, isActive: true },
+      relations: ['provider'],
+    });
+
+    if (!room) {
+      throw new NotFoundException('Room not found');
+    }
+
+    return this.mapRoomDetail(room);
+  }
+
+  private mapRoomDetail(room: Room) {
+    return {
+      id: room.id,
+      name: room.name,
+      description: room.description,
+      roomType: room.roomType,
+      city: room.city,
+      address: room.address,
+      zip: room.zip,
+      state: room.state,
+      country: room.country,
+      basePrice: room.basePrice,
+      priceModel: room.priceModel,
+      bookingMode: room.bookingMode,
+      sizeSqm: room.sizeSqm,
+      capacity: room.capacity,
+      amenities: room.amenities,
+      equipment: room.equipment,
+      imageUrls: room.imageUrls,
+      openingHours: room.openingHours,
+      createdAt: room.createdAt,
+      provider: {
+        id: room.provider.id,
+        displayName: room.provider.displayName,
+        profileImageUrl: room.provider.profileImageUrl,
+        bio: room.provider.bio,
+        ratingAverage: room.provider.ratingAverage,
+        ratingCount: room.provider.ratingCount,
+      },
+      ratingAverage: room.ratingAverage,
+      ratingCount: room.ratingCount,
+    };
+  }
+
   private mapProvider(provider: User) {
     return {
       id: provider.id,
@@ -195,6 +242,58 @@ export class DiscoveryService {
         displayName: room.provider.displayName,
         profileImageUrl: room.provider.profileImageUrl,
       },
+      ratingAverage: room.ratingAverage,
+      ratingCount: room.ratingCount,
+    };
+  }
+
+  async getProviderDetail(id: string) {
+    const provider = await this.userRepo.findOne({
+      where: { id, role: UserRole.PROVIDER },
+      relations: ['services'],
+    });
+
+    if (!provider) {
+      throw new NotFoundException('Provider not found');
+    }
+
+    // Nur aktive Services anzeigen
+    provider.services = (provider.services ?? []).filter(
+      (service) => service.isActive,
+    );
+
+    return this.mapProviderDetail(provider);
+  }
+
+  private mapProviderDetail(provider: User) {
+    return {
+      id: provider.id,
+      displayName: provider.displayName,
+      city: provider.city,
+      address: provider.address,
+      zip: provider.zip,
+      profileImageUrl: provider.profileImageUrl,
+      bio: provider.bio,
+      ratingAverage: provider.ratingAverage,
+      ratingCount: provider.ratingCount,
+      roles: provider.roles,
+      genres: provider.genres,
+      socialMedia: provider.socialMedia,
+      musicTracks: provider.musicTracks,
+      services: (provider.services ?? []).map((service) => ({
+        id: service.id,
+        title: service.title,
+        description: service.description,
+        serviceType: service.serviceType,
+        basePrice: service.basePrice,
+        priceModel: service.priceModel,
+        location: service.location,
+        bookingMode: service.bookingMode,
+        genres: service.genres,
+        revisionsOffered: service.revisionsOffered,
+        revisionCount: service.revisionCount,
+      })),
+      createdAt: provider.createdAt,
     };
   }
 }
