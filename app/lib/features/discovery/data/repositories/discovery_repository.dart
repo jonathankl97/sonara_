@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonara/core/exceptions/app_exception.dart';
 import 'package:sonara/core/network/api_client.dart';
 import 'package:sonara/features/discovery/data/models/paginated_result.dart';
+import 'package:sonara/features/discovery/data/models/provider_detail_model.dart';
 import 'package:sonara/features/discovery/data/models/provider_search_result.dart';
+import 'package:sonara/features/discovery/data/models/room_detail_model.dart';
 import 'package:sonara/features/discovery/data/models/room_search_result.dart';
 
 class DiscoveryRepository {
@@ -93,6 +95,26 @@ class DiscoveryRepository {
         total: json['total'] as int,
         page: json['page'] as int,
         limit: json['limit'] as int,
+      );
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
+    }
+  }
+
+  Future<RoomDetailModel> fetchRoomDetail(String id) async {
+    try {
+      final response = await _apiClient.get('/discovery/rooms/$id');
+      return RoomDetailModel.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      throw AppException.fromDioException(e);
+    }
+  }
+
+  Future<ProviderDetailModel> fetchProviderDetail(String id) async {
+    try {
+      final response = await _apiClient.get('/discovery/providers/$id');
+      return ProviderDetailModel.fromJson(
+        response.data as Map<String, dynamic>,
       );
     } on DioException catch (e) {
       throw AppException.fromDioException(e);
