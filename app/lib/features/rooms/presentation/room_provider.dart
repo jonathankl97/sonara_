@@ -102,6 +102,51 @@ class RoomNotifier extends AsyncNotifier<List<RoomModel>> {
     final current = state.value ?? [];
     state = AsyncData(current.where((r) => r.id != id).toList());
   }
+
+  Future<void> uploadAndUpdateRoom({
+    required String roomId,
+    required Map<String, dynamic> updates,
+    required List<String> localImagePaths,
+    required List<String> existingImageUrls,
+  }) async {
+    final List<Reference> uploadedRefs = [];
+
+    try {
+      final List<String> newImageUrls = [];
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+
+      if (uid != null) {
+        for (final path in localImagePaths) {
+          final fileName = const Uuid().v4();
+          final storageRef = FirebaseStorage.instance
+              .ref()
+              .child('room_images')
+              .child(uid)
+              .child('$fileName.jpg');
+
+          await storageRef.putFile(File(path));
+          final url = await storageRef.getDownloadURL();
+
+          newImageUrls.add(url);
+          uploadedRefs.add(storageRef);
+        }
+      }
+
+      // Bestehende + neue URLs kombinieren
+      updates['imageUrls'] = [...existingImageUrls, ...newImageUrls];
+
+      await _repository.updateRoom(roomId, updates);
+      state = const AsyncLoading();
+      state = await AsyncValue.guard(() => _repository.fetchMyRooms());
+    } on Exception {
+      for (final ref in uploadedRefs) {
+        try {
+          await ref.delete();
+        } catch (_) {}
+      }
+      rethrow;
+    }
+  }
 }
 
 final roomNotifierProvider =

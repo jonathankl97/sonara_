@@ -38,10 +38,10 @@ class RoomBasicInfoSection extends StatelessWidget {
         FormDropdown<RoomType>(
           value: selectedRoomType,
           items: RoomType.values,
-          labels: roomTypeLabels,
+          labels: {for (final t in RoomType.values) t: t.label},
           onChanged: onTypeChanged,
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(height: 20),
         const FormLabel('Beschreibung*'),
         const SizedBox(height: 8),
         FormTextField(

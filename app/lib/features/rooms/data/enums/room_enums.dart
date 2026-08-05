@@ -10,6 +10,19 @@ enum RoomType {
   final String value;
   const RoomType(this.value);
 
+  String get label {
+    const labels = {
+      'recordingStudio': 'Tonstudio',
+      'rehearsalRoom': 'Proberaum',
+      'productionSuite': 'Produktionsstudio',
+      'podcastStudio': 'Podcast-Studio',
+      'vocalBooth': 'Gesangskabine',
+      'djBooth': 'DJ Booth',
+      'other': 'Sonstiges',
+    };
+    return labels[value] ?? 'Sonstiges';
+  }
+
   static RoomType fromValue(String value) {
     return RoomType.values.firstWhere(
       (e) => e.value == value,
@@ -18,20 +31,16 @@ enum RoomType {
   }
 }
 
-const roomTypeLabels = {
-  RoomType.recordingStudio: 'Tonstudio',
-  RoomType.rehearsalRoom: 'Proberaum',
-  RoomType.productionSuite: 'Produktionsstudio',
-  RoomType.vocalBooth: 'Gesangskabine',
-  RoomType.podcastStudio: 'Podcast-Studio',
-};
-
 enum RoomPriceModel {
   hourly('hourly'),
   perDay('perDay');
 
   final String value;
   const RoomPriceModel(this.value);
+
+  String get label {
+    return value == 'hourly' ? 'Stundenpreis' : 'Tagespreis';
+  }
 
   static RoomPriceModel fromValue(String value) {
     return RoomPriceModel.values.firstWhere(
@@ -56,6 +65,22 @@ enum RoomEquipmentCategory {
   final String value;
   const RoomEquipmentCategory(this.value);
 
+  String get label {
+    const labels = {
+      'daw': 'DAW',
+      'microphone': 'Mikrofon',
+      'mixer': 'Mischpult',
+      'audioInterface': 'Audio-Interface',
+      'monitor': 'Monitor',
+      'headphones': 'Kopfhörer',
+      'instrument': 'Instrument',
+      'djGear': 'DJ-Equipment',
+      'outboard': 'Outboard',
+      'other': 'Sonstiges',
+    };
+    return labels[value] ?? 'Sonstiges';
+  }
+
   static RoomEquipmentCategory fromValue(String value) {
     return RoomEquipmentCategory.values.firstWhere(
       (e) => e.value == value,
@@ -63,5 +88,3 @@ enum RoomEquipmentCategory {
     );
   }
 }
-
-
