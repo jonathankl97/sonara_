@@ -38,6 +38,7 @@ class ProfileScreen extends ConsumerWidget {
         return Scaffold(
           drawer: ProfileDrawer(user: user),
           appBar: AppBar(
+            title: Text(user.displayName!),
             actions: [
               TextButton(
                 onPressed: () {
@@ -68,7 +69,6 @@ class ProfileScreen extends ConsumerWidget {
                     children: [
                       ProfileHeader(
                         profileImageUrl: user.profileImageUrl,
-                        displayName: user.displayName,
                         bio: user.bio,
                       ),
                       const SizedBox(height: 16),
